@@ -17,10 +17,15 @@
 ### 项目工作计划
 #### **第一次迭代周期工作安排：**
 1.搭建python环境，安装virtualenv，并在虚拟环境里面配置flask，安装MySQL数据库和Navicat数据库管理工具
+
 2.构思web网页的基本框架和功能，拟定题目
+
 3.学习flask框架的基本知识，熟悉温习python语法知识
+
 4.学习html语言、css基础知识
+
 5.动手搭建简单的web程序，包括登录、注册、发布问答、问答评论、问答搜索
+
 6.在基础web架构上美化（如：背景图、底部版权条等）、添加新功能：
 * 用户注册、登录界面的验证、错误提示以及用户注册信息的安全性管理
 * 用户可以在发布问答或评论时上传图片及表情等
@@ -33,14 +38,20 @@
 
 #### **第二次迭代周期工作安排：**
 8.用户消息提醒（当有其他用户回复该问题后，对用户进行短信/邮件等提醒）
+
 9.利用python Web spider技术对今日哈工大上的新闻进行提取，集成到系统中，在发布的同时，并对用户的相关问题进行回答。
+
 10.增加web聊天界面（暂定）
+
 11.搭载到远程服务器上
+
 **Created by UTNW(2017.10.01)**
 
 ![](https://github.com/UTNW/HITChat/raw/master/time1.png)
+
 **Created by UTNW(2017.10.01)**
 
 #### 第一次迭代Burndown Chart
-![](https://github.com/UTNW/HITChat/raw/master/Burndown Chart.png)
+![](https://github.com/UTNW/HITChat/raw/master/BurndownChart.png)
+
 **Created by UTNW(2017.10.01)**
