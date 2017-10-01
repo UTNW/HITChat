@@ -38,9 +38,9 @@
 11.搭载到远程服务器上
 **Created by UTNW(2017.10.01)**
 
-![](https://github.com/UTNW/HITChat.git/raw/master/time1.png)
+![](https://github.com/UTNW/HITChat/raw/master/time1.png)
 **Created by UTNW(2017.10.01)**
 
 #### 第一次迭代Burndown Chart
-![](https://github.com/UTNW/HITChat.git/raw/master/Burndown Chart.png)
+![](https://github.com/UTNW/HITChat/raw/master/Burndown Chart.png)
 **Created by UTNW(2017.10.01)**
