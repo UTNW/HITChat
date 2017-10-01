@@ -1,6 +1,6 @@
 ## 软件工程实践项目
 #### Team：Up To New World(UTNW)
-#### Member：Zhang Xinghua/Xiao Tengzhao/Wei Bowen
+#### Member：Zhang Xinghua/Wei Bowen/Xiao Tengzhao
 ### 项目选题（自选题目）
 **HITChat（面向哈工大师生的交流平台）**
 
