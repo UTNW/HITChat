@@ -66,7 +66,7 @@
 
 
 ### 2017.10.1-10.7 任务汇总
-![](https://github.com/AIRobotZhang/PostBar/raw/master/pic.png)
+![](https://github.com/UTNW/HITChat/raw/master/pic.png)
 
 #### 这是HITChat 1.0 版本，目前实现的功能有：注册、登录、发布问答、查询、评论
 
@@ -80,15 +80,15 @@
   首先进入虚拟环境的命令环境下，其次，进入到manage.py项目文件目录下，依次在命令行窗口下执行如下两条命令：python manage.py db migrate 和 python manage.py db upgrade ,映射成功，可到数据库命令行窗口查看
 
 **详细页面展示：**
-![](https://github.com/AIRobotZhang/PostBar/raw/master/login.png)
+![](https://github.com/UTNW/HITChat/raw/master/login.png)
 
-![](https://github.com/AIRobotZhang/PostBar/raw/master/register.png)
+![](https://github.com/UTNW/HITChat/raw/master/register.png)
 
-![](https://github.com/AIRobotZhang/PostBar/raw/master/first_page.png)
+![](https://github.com/UTNW/HITChat/raw/master/first_page.png)
 
-![](https://github.com/AIRobotZhang/PostBar/raw/master/question.png)
+![](https://github.com/UTNW/HITChat/raw/master/question.png)
 
-![](https://github.com/AIRobotZhang/PostBar/raw/master/answer.png)
+![](https://github.com/UTNW/HITChat/raw/master/answer.png)
 
 ###### 总结：在我们小组成员的共同努力下，第一次任务基本完成
 **Created by UTNW(2017.10.09)**
