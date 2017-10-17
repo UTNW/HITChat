@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}登录{% endblock %}
+
+{% block head%}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/login_register.css') }}">
+{% endblock %}
+
+{% block main%}
+    <h3 class="page-title">登录</h3>
+    <form action="" method="POST">
+        <div class="form-container">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="手机号码" name="telephone">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="密码" name="password">
+            </div>
+            <div class="form-group">
+                 &nbsp;&nbsp;&nbsp;&nbsp;
+                 <font style="color:red">手机号或密码错误</font>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 <a href="#">找回/修改密码？</a>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block">登录</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block footer%}
+    <div class="footer">
+        <br/>
+        <span>@2017 Software Engineering, School of Computer Science and Technology, Harbin Institute of Technology | Designed by UTNW</span>
+    </div>
+{% endblock %}

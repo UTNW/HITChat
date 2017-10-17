@@ -1,0 +1,27 @@
+.logo{
+    width: 100px;
+}
+
+body{
+    background: url('hit1.jpg') no-repeat 0px 5px;
+    background-size:100%;
+}
+.main{
+    background: rgba(255,255,255,0.7);
+    width: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 10px;
+}
+.page-title{
+    text-align: center;
+}
+.footer{
+    background: rgba(255,255,255,0);
+    font-family: "Times New Roman";
+    font-size: 18px;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    left: 21%;
+}

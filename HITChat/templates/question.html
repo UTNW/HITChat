@@ -1,0 +1,53 @@
+{% extends 'base_index.html' %}
+
+{% block title %}发布问答{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/question.css') }}">
+    <!-- 请确保CKEditor文件路径正确 -->
+    <script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <h3 class="page-title">发布问答</h3>
+    <form action="" method="POST">
+        <div class="form-container">
+            <div class="form-group1">
+                <input type="text" placeholder="请输入标题" name="title" class="form-control" required>
+            </div>
+            <br/>
+            <div class="form-select">
+                <form role="form">
+                  <div class="form-group">
+                    <label for="name">主题</label>
+                    <select class="form-control">
+                      <option>通知</option>
+                      <option>问答</option>
+                      <option>二手</option>
+                      <option>学习</option>
+                      <option>新闻</option>
+                    </select>
+                  </div>
+                </form>
+            </div>
+            <br/>
+            <div class="form-grouptext">
+                <textarea name="content" id="editor" rows="5" placeholder="请输入内容" class="form-control" required></textarea>
+            </div>
+            <br/>
+            <div class="form-group1">
+                <button class="btn btn-primary">立即发布</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        // 用CKEditor替换<textarea id="editor">
+        // 使用默认配置
+        // CKEDITOR.replace('editor1');
+        CKEDITOR.replace( 'editor', {
+            language: 'zh-cn',
+{#            filebrowserBrowseUrl: '/static/filemanager/index.html',#}
+            filebrowserUploadUrl: '/ckupload/',
+        });
+    </script>
+{% endblock %}

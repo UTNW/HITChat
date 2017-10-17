@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml>
+	<category>
+		<pattern>* 买 * 票</pattern>
+		<template>欢迎您来到<set name="topic">购票</set>系统~</template>
+	</category>
+	<category><pattern>买 票</pattern><template><srai>* 买 * 票</srai> </template> </category>
+	<category><pattern>购 票</pattern> <template><srai>* 买 * 票</srai> </template> </category>
+	<category><pattern>购 * 票</pattern> <template><srai>* 买 * 票</srai> </template> </category>
+	<category><pattern>* 购 * 票</pattern> <template><srai>* 买 * 票</srai> </template> </category>
+	<category><pattern>买 * 票</pattern> <template><srai>* 买 * 票</srai> </template> </category>
+	
+<topic name="购票">
+	<category>
+		<pattern>*</pattern>
+		<template>
+			<think><set name="star"><star/></set></think>
+			  <random>
+				<li>唔... 主人没有教我怎么回答"<get name="star" />"... </li> 
+				<li>唔... </li> 
+				<li>what? </li> 
+				<li>喵... :(睁大眼睛看着你 </li> 
+				<li>摇尾巴... </li>
+			  </random>
+		</template>
+	</category>
+	<category>
+		<pattern>* 买 *  票 </pattern>
+		<template>
+			<think><set name="买票">买票</set></think>
+			您想买从哪到哪的<star index = "2"/>票?
+		</template>
+	</category>
+
+	<category>
+		<pattern>从 * 到 * 的 * 票</pattern>
+		<template>
+			好的，正在为您买票，请稍后...请问您的姓名、身份证号、电话号码是什么?
+		</template>
+	</category>
+	
+	<category>
+		<pattern> * 到 * </pattern>
+		<template>
+			<condition>
+			<li name="买票" value="买票"><srai>从 * 到 * 的 * 票</srai></li>
+			<li>您是要买车票吗？</li>
+			</condition>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* 票</pattern>
+		<template>
+			<srai> * 到 * </srai>
+		</template>
+	</category> 
+	
+	<category>
+		<pattern>是 *</pattern>
+		<that>您是要买车票吗？</that>
+		<template>
+			<srai>从 * 到 * 的 * 票</srai>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>是</pattern>
+		<that>您是要买车票吗？</that>
+		<template>
+			<srai>是 *</srai>
+		</template>
+	</category> 
+	
+	<category>
+		<pattern>嗯</pattern>
+		<that>您是要买车票吗？</that>
+		<template>
+			<srai>是 *</srai>
+		</template>
+	</category>  
+	
+	<category><pattern>对</pattern><template><srai>是</srai> </template> </category>
+	<category><pattern>对 *</pattern> <template><srai>是</srai> </template> </category>
+	<category><pattern>当然</pattern> <template><srai>是</srai> </template> </category>
+	<category><pattern>当然 *</pattern> <template><srai>是</srai> </template> </category>
+	<category><pattern>YES</pattern> <template><srai>是</srai> </template> </category>
+	<category><pattern>YES *</pattern> <template><srai>是</srai> </template> </category>
+	
+	<category><pattern>否</pattern><template><srai>不 *</srai> </template> </category>
+	<category><pattern>不</pattern><template><srai>不 *</srai> </template> </category>
+	<category><pattern>NO</pattern><template><srai>不 *</srai> </template> </category>
+	<category>
+		<pattern>不 *</pattern>
+		<that>您是要买车票吗？</that>
+		<template>
+			那要做什么呢？
+		</template>
+	</category>
+	
+	<category>
+		<pattern>*</pattern>
+		<that>那要做什么呢？</that>
+		<template><star/>?非常抱歉，小编没有明白您的意思:(</template>
+	</category>
+	
+	<category>
+		<pattern>*</pattern>
+		<that>好的，正在为您买票，请稍后...请问您的姓名、身份证号、电话号码是什么?</that>
+		<template>
+			您想购买几号的车票呢？
+		</template>
+	</category>
+	
+	<category>
+		<pattern>*</pattern>
+		<that>您想购买几号的车票呢？</that>
+		<template>
+			<think><set name="日期"><star/></set></think>
+			<star/>的发车时间："8点20、9点00、10点05、12点00、13点00、15点26" 您想购买哪个时间段的车票呢？
+		</template>
+	</category>
+	
+	<category>
+		<pattern>* 点 *</pattern>
+		<that>* 您想购买哪个时间段的车票呢？</that>
+		<template>
+			购票成功，请您于<get name="日期"/> <star index="1"/>:<star index="2"/>准时乘车，是否 需要购买出行保险？
+		</template>
+	</category>
+	<category><pattern>* : *</pattern><template><srai>* 点 *</srai> </template> </category>
+	<category><pattern>*: *</pattern><template><srai>* 点 *</srai> </template> </category>
+	<category><pattern>* ：*</pattern> <template><srai>* 点 *</srai> </template> </category>
+	<category><pattern>*：*</pattern> <template><srai>* 点 *</srai> </template> </category>
+	<category><pattern>*:*</pattern> <template><srai>* 点 *</srai> </template> </category>
+	<category><pattern>* 点</pattern> <template><srai>* 点 *</srai> </template> </category>
+	<category><pattern>* ，*</pattern> <template><srai>* 点 *</srai> </template> </category>
+	
+	<category>
+		<pattern>不 *</pattern>
+		<that>* 需要购买出行保险？</that>
+		<template>
+			好的~祝您一路平安
+		</template>
+	</category>
+	<category><pattern>不</pattern><template><srai>不 *</srai> </template> </category>
+	<category><pattern>否</pattern> <template><srai>不 *</srai> </template> </category>
+	<category><pattern>NO</pattern> <template><srai>不 *</srai> </template> </category>
+	<category><pattern>NO *</pattern> <template><srai>不 *</srai> </template> </category>
+	
+	<category>
+		<pattern>是</pattern>
+		<that>* 需要购买出行保险？</that>
+		<template>
+			好的~已为您订购30元/年意外险~<set name="topic">''</set>
+		</template>
+	</category>
+	<category><pattern>需 要</pattern><template><srai>是</srai> </template> </category>
+	<category><pattern>需 要 *</pattern> <template><srai>是</srai> </template> </category>
+	<category><pattern>好</pattern> <template><srai>是</srai> </template> </category>
+	<category><pattern>好 *</pattern> <template><srai>是</srai> </template> </category>
+	<category><pattern>YES</pattern> <template><srai>是</srai> </template> </category>
+	<category><pattern>YES *</pattern> <template><srai>是</srai> </template> </category>
+	
+	<category>
+		<pattern>谢 谢</pattern>
+		<template>
+			不客气~
+		</template>
+	</category>
+	<category><pattern>谢 谢 *</pattern><template><srai>谢谢</srai> </template> </category>
+	<category><pattern>THANKS</pattern> <template><srai>谢谢</srai> </template> </category>
+	<category><pattern>THANK YOU</pattern> <template><srai>谢谢</srai> </template> </category>
+	<category><pattern>THANK YOU *</pattern> <template><srai>谢谢</srai> </template> </category>
+</topic>
+</aiml>

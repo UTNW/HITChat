@@ -1,0 +1,46 @@
+{% extends 'base_aiml.html' %}
+
+{% block title %}聪明的一休哥{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/YX_aiml.css') }}" media="screen" type="text/css" />
+{% endblock %}
+
+{% block main %}
+    <div id="convo" data-from="Sonu Joshi">
+        <ul id="chat" class="chat-thread",style="margin-top: 100px;">
+            {% for dialog in yx_aiml %}
+                <li>{{ dialog.content_p }}</li>
+                <li>{{ dialog.content_r }}</li>
+            {% endfor %}
+        </ul>
+        <script type="text/javascript">
+            var div = document.getElementById('chat');
+            div.scrollTop = div.scrollHeight;
+        </script>
+    </div>
+    <form action="{{ url_for('YX_aiml') }}" method="POST">
+        <div>
+{#            <script type="text/javascript">#}
+{#                function add()#}
+{#                {#}
+{#                    var div = document.getElementById('chat');#}
+{#                    div.scrollTop = div.scrollHeight;#}
+{#                }#}
+{#            </script>#}
+            <input name="dialog_content" type="text" class="form-control"
+             placeholder="请输入对话内容，回车发送" style="margin-bottom:10px;margin-top:10px;margin-left:500px;width:600px;
+             height:40px">
+        </div>
+    </form>
+    <form action="{{ url_for('upload_file') }}" method="POST" enctype=multipart/form-data>
+        <div class="parent">
+            <div class="test">
+                <input type=file name=file style="color: white;">
+            </div>
+            <div class="test">
+                <input type=submit value=上传>
+            </div>
+        </div>
+    </form>
+{% endblock %}

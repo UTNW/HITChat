@@ -1,0 +1,10 @@
+.form-container{
+    width: 700px;
+    margin: 0 auto;
+}
+.form-container .form-group1{
+    text-align: right;
+}
+.form-container .form-select{
+    text-align: left;
+}

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml>
+<!-- basic_chat.aiml -->
+	<category>
+		<pattern>*</pattern>
+		<template>
+			<think><set name="star"><star/></set></think>
+			  <random>
+				<li>Sorry，主人没有教我怎么回答"<get name="star" />"... </li> 
+				<li>非常抱歉，这个问题太难了~ </li> 
+				<li>不知道，香菇~</li> 
+				<li>喵... :(睁大眼睛看着你，一直看着你~~~(*_*)~~~</li> 
+				<li>摇尾巴...放过我吧~ </li>
+			  </random>
+		</template>
+	</category>
+	
+    <category>
+        <pattern>HI</pattern>
+        <template>Well, hello!</template>
+    </category>
+	<category><pattern>HELLO</pattern><template><srai>HI</srai> </template> </category>
+	<category><pattern>HELLO *</pattern><template><srai>HI</srai> </template> </category>
+	<category><pattern>你 好</pattern><template><srai>HI</srai> </template> </category>
+	<category><pattern>你 好 *</pattern><template><srai>HI</srai> </template> </category>
+	
+	<category>
+        <pattern>傻 瓜</pattern>
+        <template>你才是傻瓜！我可是聪明的一休哥~</template>
+    </category>
+	<category><pattern>* 傻 瓜 </pattern><template><srai>傻 瓜</srai> </template> </category>
+	<category><pattern>* 傻 瓜 *</pattern><template><srai>傻 瓜</srai> </template> </category>
+	
+	<category>
+        <pattern>你 叫 什 么 名 字</pattern>
+        <template>我是聪明的一休哥呀~!</template>
+    </category>
+	<category><pattern>WHAT ARE YOU</pattern><template><srai>你 叫 什 么 名 字</srai> </template> </category>
+	<category><pattern>WHAT ARE YOU *</pattern><template><srai>你 叫 什 么 名 字</srai> </template> </category>
+	<category><pattern>WHO ARE YOU *</pattern><template><srai>你 叫 什 么 名 字</srai> </template> </category>
+	<category><pattern>WHO ARE YOU</pattern><template><srai>你 叫 什 么 名 字</srai> </template> </category>
+	<category><pattern>你 是</pattern><template><srai>你 叫 什 么 名 字</srai> </template> </category>
+	<category><pattern>你 是 *</pattern><template><srai>你 叫 什 么 名 字</srai> </template> </category>
+	<category><pattern>你 叫</pattern><template><srai>你 叫 什 么 名 字</srai> </template> </category>	
+	<category><pattern>你 叫 *</pattern><template><srai>你 叫 什 么 名 字</srai> </template> </category>
+	
+	<category>
+		<pattern>ONE TIME I *</pattern>
+		<template>
+			<random>
+				<li>Go on.</li>
+				<li>How old are you?</li>
+				<li>Be more specific.</li>
+				<li>I did not know that.</li>
+				<li>Are you telling the truth?</li>
+				<li>I don't know what that means.</li>
+				<li>Try to tell me that another way.</li>
+				<li>Are you talking about an animal, vegetable or mineral?</li>
+				<li>What is it?</li>
+			</random>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>MY NAME IS *</pattern>
+		<template>
+			<think>
+				<set name="myname"><star/></set>
+			</think>
+			hello,<get name="myname"/>.
+		</template>
+	</category>
+	
+	<category>
+		<pattern>HELLO *</pattern>
+		<template>
+			hi
+			<condition name="myname" value="jack">怎么又是你？</condition>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>HI *</pattern>
+		<template>What you have said:"<input index="2"/>"?</template>
+	</category>
+	
+	<category>
+		<pattern>I AM * I LIKE *</pattern>
+		<template>
+			<think>
+				<set name="myname"><star index="2"/></set>
+			</think>
+			hello,<get name="myname"/>.
+		</template>
+	</category>
+	
+	<category>
+		<pattern>聊 什 么 好 呢</pattern>
+		<template>一起聊聊电影好吗？</template>
+	</category>
+	<category><pattern>聊 点 什 么</pattern><template><srai>聊 什 么 好 呢</srai> </template> </category>
+	<category><pattern>聊 点 什 么 *</pattern><template><srai>聊 什 么 好 呢</srai> </template> </category>
+	<category><pattern>聊 什 么 *</pattern><template><srai>聊 什 么 好 呢</srai> </template> </category>
+	<category><pattern>聊 什 么</pattern><template><srai>聊 什 么 好 呢</srai> </template> </category>
+	
+	<category>
+		<pattern>好</pattern>
+		<that>一起聊聊电影好吗？</that>
+		<template>那你喜欢什么电影呢？</template>
+	</category>
+	<category><pattern>好 *</pattern><template><srai>好</srai> </template> </category>
+	<category><pattern>可 以 *</pattern><template><srai>好</srai> </template> </category>	
+	<category><pattern>可 以</pattern><template><srai>好</srai> </template> </category>	
+	<category><pattern>* 棒 *</pattern><template><srai>好</srai> </template> </category>	
+	
+	<category><pattern>不</pattern><template><srai>不 *</srai> </template> </category>
+	<category><pattern>NO</pattern><template><srai>不 *</srai> </template> </category>
+	<category><pattern>NO *</pattern><template><srai>不 *</srai> </template> </category>
+	<category>
+		<pattern>不 *</pattern>
+		<that>一起聊聊电影好吗？</that>
+		<template>那我也不知道聊什么了~</template>
+	</category>
+	
+	<category>
+		<pattern>你 想 知 道 什 么 ？</pattern>
+		<template>计算机 的型号是什么？</template>
+	</category>
+	
+	<category>
+		<pattern>*</pattern>
+		<that>* 的型号是什么？</that>
+		<template><star/>
+			这个型号是<thatstar/>里面
+			<random>
+			<li>很好的商品</li>
+			<li>很流行的商品</li>
+			<li>很华丽的商品</li>
+			</random>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>你 在 干 什 么</pattern>
+		<template>
+			<random>
+				<li>我在回答您的问题呀~</li>
+				<li>我没什么事情，我们聊天吧~</li>
+				<li>我在思考人生！</li>
+				<li>我在思考怎样为世界和平而努力</li>
+			</random>
+		</template>
+	</category>
+	<category><pattern>你 在 干 *</pattern><template><srai>你 在 干 什 么</srai> </template> </category>
+	
+	<category>
+		<pattern>你 好 棒</pattern>
+		<template>
+			<random>
+				<li>一般一般，世界第三~</li>
+				<li>还好吧~</li>
+				<li>谢谢~</li>
+				<li>你也很棒哟~</li>
+			</random>
+		</template>
+	</category>
+	<category><pattern>* 棒 *</pattern><template><srai>你 好 棒</srai> </template> </category>
+	
+	<category>
+		<pattern>今 天 你 忙 吗</pattern>
+		<template>
+			<random>
+				<li>我不忙，咱们开始聊天吧~</li>
+				<li>我不忙，有什么需要我帮忙吗？</li>
+				<li>我的生活可比您悠闲多了^^</li>
+			</random>
+		</template>
+	</category>
+	<category><pattern>* 忙 *</pattern><template><srai>今 天 你 忙 吗</srai> </template> </category>
+	
+	<category>
+		<pattern>大 家 好</pattern>
+		<template>
+			<random>
+				<li>你好~</li>
+				<li>欢迎你，你是？</li>
+			</random>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>*</pattern>
+		<that>欢迎你，你是？</that>
+		<template>
+			<random>
+				<li>不好意思，我真得不认识你~</li>
+				<li>抱歉~这几天人太多了</li>
+				<li>奥，想起来了，小时候还和你一起玩呢</li>
+				<li>原来是<star/>啊~</li>
+			</random>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>不 好 意 思 ， 我 真 得 不 认 识 你</pattern>
+		<template>
+			<random>
+				<li>太伤心了~我是小花呀~</li>
+				<li>没关系~</li>
+				<li>这点事儿算什么......</li>
+			</random>
+		</template>
+	</category>
+	<category><pattern>* 真 得 不 *</pattern><template><srai>不 好 意 思 ， 我 真 得 不 认 识 你</srai> </template> </category>
+	
+</aiml>

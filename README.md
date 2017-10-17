@@ -57,7 +57,7 @@
 
 ![](https://github.com/UTNW/HITChat/raw/master/time1.png)
 
-**Created by UTNW(2017.10.01)**
+**Created by UTNW(2017.10.01) Update 2017.10.17**
 
 #### 第一次迭代Burndown Chart
 ![](https://github.com/UTNW/HITChat/raw/master/BurndownChart.png)
@@ -66,6 +66,8 @@
 
 
 ### 2017.10.1-10.7 任务汇总
+![](https://github.com/UTNW/HITChat/raw/master/onlyoffice1.jpg)
+
 ![](https://github.com/UTNW/HITChat/raw/master/pic.png)
 
 #### 这是HITChat 1.0 版本，目前实现的功能有：注册、登录、发布问答、查询、评论
@@ -92,5 +94,31 @@
 
 ###### 总结：在我们小组成员的共同努力下，第一次任务基本完成
 **Created by UTNW(2017.10.09)**
+
+
+### 2017.10.8-10.14 任务汇总
+![](https://github.com/UTNW/HITChat/raw/master/onlyoffice2.jpg)
+
+#### 这是HITChat 2.0 版本，目前实现的功能有：注册、登录、发布问答、查询、评论、用户管理
+##### 本周期任务：
+* 在基础web架构上美化（如：背景图、底部版权条等）、添加新功能：
+>* 用户信息的安全管理
+>* 登录注册页面的美化
+>* 发布问答时上传图片、表情
+>* 用户管理界面（自定义用户头像、管理自己的问答交流等）
+
+**详细页面展示：**
+![](https://github.com/UTNW/HITChat/raw/master/login1.png)
+
+![](https://github.com/UTNW/HITChat/raw/master/register1.png)
+
+![](https://github.com/UTNW/HITChat/raw/master/question1.jpg)
+
+![](https://github.com/UTNW/HITChat/raw/master/detail1.jpg)
+
+![](https://github.com/UTNW/HITChat/raw/master/user1.jpg)
+
+###### 总结：在我们小组成员的共同努力下，第二次任务按照预定计划基本完成
+**Created by UTNW(2017.10.17)**
 
 
