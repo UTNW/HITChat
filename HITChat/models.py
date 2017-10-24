@@ -22,8 +22,9 @@ class Question(db.Model):
     __tablename__='question'
     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
     title = db.Column(db.String(100),nullable=False)
-    label = db.Column(db.String(100), nullable=False)
+    label = db.Column(db.String(100), nullable=True)
     content = db.Column(db.Text,nullable=True)
+    zan = db.Column(db.Integer, nullable=True, default=0)
     create_time = db.Column(db.DateTime,default=datetime.now)
     #now()获取的是服务器第一次运行的时间
     #now是每次创建一个模型时获取的当前时间
@@ -40,6 +41,16 @@ class Answer(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     question = db.relationship('Question',backref=db.backref('answers',order_by=id.desc()))
     author = db.relationship('User', backref=db.backref('answers'))
+
+class Answer2(db.Model):
+    __tablename__='answer2'
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    content = db.Column(db.Text,nullable=True)
+    create_time = db.Column(db.DateTime,default=datetime.now)
+    answer_id = db.Column(db.Integer,db.ForeignKey('answer.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    answer = db.relationship('Answer',backref=db.backref('answers2',order_by=id.desc()))
+    author = db.relationship('User', backref=db.backref('answers2'))
 
 class YX_Aiml(db.Model):
     __tablename__='yx_aiml'

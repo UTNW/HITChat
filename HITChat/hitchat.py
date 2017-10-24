@@ -2,7 +2,7 @@
 from flask import Flask,render_template,request,redirect,url_for,session,g,send_from_directory,make_response
 from werkzeug import secure_filename
 import config
-from models import User,Question,Answer,YX_Aiml
+from models import User,Question,Answer,YX_Aiml,Answer2
 from exts import db
 from decorators import login_required
 from sqlalchemy import or_
@@ -56,7 +56,7 @@ def test():
 @login_required
 def index():
     context = {
-        'questions': Question.query.order_by('-create_time').all()
+        'questions': Question.query.order_by(db.desc(Question.create_time)).all()
     }
     return render_template('index.html',**context)
 
@@ -116,6 +116,7 @@ def question():
         return render_template('question.html')
     else:
         title = request.form.get('title')
+        label = request.form.get('label')
         content = request.form.get('content')
         # for i in content:
         #     print i
@@ -128,7 +129,7 @@ def question():
         #      else:
         #          content += Listcontent[i]
         # print title,content
-        question = Question(title=title,content=content)
+        question = Question(title=title,label=label,content=content)
         question.author = g.user
         db.session.add(question)
         db.session.commit()
@@ -191,7 +192,6 @@ def detail(question_id):
 def add_answer():
     content = request.form.get('answer_content')
     question_id = request.form.get('question_id')
-
     answer = Answer(content=content)
     answer.author = g.user
     question = Question.query.filter(Question.id == question_id).first()
@@ -200,11 +200,37 @@ def add_answer():
     db.session.commit()
     return redirect(url_for('detail',question_id=question_id))
 
+@app.route('/add_answer2/',methods=['POST'])
+@login_required
+def add_answer2():
+    content = request.form.get('answer2')
+    answer_id = request.form.get('answer_id')
+    question_id = request.form.get('question_id')
+    print content,answer_id
+    answer2 = Answer2(content=content)
+    answer2.author = g.user
+    answer = Answer.query.filter(Answer.id == answer_id).first()
+    answer2.answer = answer
+    db.session.add(answer2)
+    db.session.commit()
+    return redirect(url_for('detail',question_id=question_id))
+
+@app.route('/add_zan/',methods=['POST'])
+@login_required
+def add_zan():
+    question_id = request.form.get('question_id')
+    zan = request.form.get('zannum')
+    question = Question.query.filter(Question.id == question_id).first()
+    question.zan = zan
+    db.session.add(question)
+    db.session.commit()
+    return redirect(url_for('detail',question_id=question_id))
+
 @app.route('/search/')
 def search():
     q = request.args.get('q')
     questions=Question.query.filter(or_(Question.title.contains(q),
-                              Question.content.contains(q))).order_by('-create_time')
+                              Question.content.contains(q))).order_by(db.desc(Question.create_time))
     return render_template('index.html',questions=questions)
 
 def gen_rnd_filename():

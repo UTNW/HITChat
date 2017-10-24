@@ -225,3 +225,11 @@ body {
 .parent.test{
   color: white;
 }
+
+.input-group{
+  position: relative;
+  bottom:10px;
+  top:10px;
+  left:63%;
+  width:488px;
+}

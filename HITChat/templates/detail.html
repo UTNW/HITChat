@@ -4,39 +4,331 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/detail.css') }}">
+    <!-- 请确保CKEditor文件路径正确 -->
+    <script src="{{ url_for('static', filename='ckeditoranswer/ckeditor.js') }}"></script>
+    <!--点赞-->
+    <script type="text/javascript" src="{{ url_for('static',filename='JS/jquery-1.8.3.min.js') }}"></script>
 {% endblock %}
 
 {% block main %}
     <h3 class="page-title">{{ question.title }}</h3>
     <p class="question-info">
         <span>作者：{{ question.author.username }}</span>
-        <span>时间：{{ question.create_time }}</span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;时间：{{ question.create_time }}</span>
     </p>
     <hr>
     <p class="question-content">{{ question.content|safe }}</p>
     <hr>
+    <div class="praise">
+        <span id="praise"><img src="{{ url_for('static',filename='images/zan.png') }}" id="praise-img" /></span>
+        <span id="praise-txt">{{ question.zan }}</span>
+        <span id="add-num"><em>+1</em></span>
+{#        <input type="hidden" name="zannum" value= praise-txt>#}
+{#        <input type="hidden" name="question_id" value="{{ question.id }}">#}
+    </div>
     <h4>评论：</h4>
     <form action="{{ url_for('add_answer') }}" method="POST">
          <div class="form-group">
-             <input name="answer_content" type="text" class="form-control"
-                    placeholder="请填写评论">
+             <textarea name="answer_content" id="editor" rows="1" placeholder="评论" class="form-control" required></textarea>
              <input type="hidden" name="question_id" value="{{ question.id }}">
          </div>
          <div class="form-group" style="text-align: right;">
              <button class="btn btn-primary">立即评论</button>
          </div>
     </form>
+    <script>
+        // 用CKEditor替换<textarea id="editor">
+        // 使用默认配置
+        // CKEDITOR.replace('editor1');
+        CKEDITOR.replace( 'editor', {
+            language: 'zh-cn',
+{#            filebrowserBrowseUrl: '/static/filemanager/index.html',#}
+            filebrowserUploadUrl: '/ckupload/',
+        });
+    </script>
     <ul class="answer-list">
           {% for answer in question.answers %}
               <li>
                   <div class="user-info">
                       <img src="{{ url_for('static',filename='images/logo.png') }}"
                            alt="" class="avatar">
-                      <span class="username">{{ answer.author.username }}</span>
-                      <span class="create-time">{{ answer.create_time }}</span>
+                      <span class="username">{{ answer.author.username }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <span class="create-time">{{ answer.create_time }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <span class="glyphicon glyphicon-thumbs-up"></span>
                   </div>
-                  <p class="answer-content">{{ answer.content }}</p>
+                  <p class="answer-content">{{ answer.content|safe }}</p>
+                  <ul class="answer-list" id={{ answer.id }}>
+                  <form action="{{ url_for('add_answer2') }}" method="POST">
+                      <div class="hf">
+                          <textarea type="text" name="answer2" class="hf-text" autocomplete="off" maxlength="100">评论…</textarea>
+                          <button class="hf-btn">回复</button>
+                          <span class="hf-nub">0/100</span>
+                      </div>
+                      <input type="hidden" name="question_id" value="{{ question.id }}">
+                      <input type="hidden" name="answer_id" value="{{ answer.id }}">
+                  </form>
+                  </ul>
+                  <script type="text/javascript">
+                     //在页面加载完后立即执行多个函数。
+                     function addloadEvent(func){
+                         var oldonload = window.onload;
+                         if(typeof window.onload != "function"){
+                             window.onload = func;
+                         }
+                         else{
+                             window.onload = function(){
+                                 if(oldonload){
+                                    oldonload();
+                                 }
+                                 func();
+                             }
+                         }
+                     }
+                     addloadEvent(b);
+                     function b(){
+                         var pn = document.getElementById({{ answer.id }});
+                         var lists = pn.children;
+                         //删除当前节点
+                         function remove(node){
+                             node.parentNode.removeChild(node);
+                         }
+                         //上面的点赞
+                         function praisebox(box,el){
+                             //获取赞数量容器
+                             var praise = box.getElementsByClassName("people")[0];
+                             //获取容器当前total值
+                             var total = parseInt(praise.getAttribute("total"));
+                             //获取点击的innerHTML
+                             var txt = el.innerHTML;
+                             //创建一个新的total存储用
+                             var newtotal;
+                             //判断点击的文字内容
+                             if(txt == "赞"){
+                                 //total值+1 因为我还没点击赞，所以要点击的时候就多了一个人 total+1
+                                 newtotal = total+1;
+                                 //判断赞数量 把相应文字放到赞容器里
+                                 praise.innerHTML = newtotal == 1 ? "我觉得很赞" : "我和" + total +"个人觉得很赞";
+                                 el.innerHTML = "取消赞";
+                             }
+                             else{
+                                 //反之total值-1
+                                 newtotal = total-1;
+                                 praise.innerHTML = newtotal == 0 ? "" : newtotal +"个人觉得很赞";
+                                 el.innerHTML = "赞";
+                             }
+                             //更新total值
+                             praise.setAttribute("total",newtotal);
+                             //如果没有人点赞容器隐藏
+                             praise.style.display = (newtotal == 0) ? "none" : "block";
+                         }
+                         //回复评论
+                         function reply(box){
+                             //获取评论框
+                             var textarea = box.getElementsByTagName("textarea")[0];
+                             //获取包含所有评论的容器
+                             var comment = box.getElementsByClassName("comment-list")[0];
+                             //创建新的评论div
+                             var div = document.createElement("div");
+                             //赋类名
+                             div.className = "comment";
+                             //设置属性
+                             div.setAttribute("user","self");
+                             //获取每条评论的innerHTML结构，每次只替换textarea的输入内容和 当前发送时间
+                             var html = '<div class="comment-left">'+'<img src="images/T2.jpg" alt=""/>'+'</div>'+
+                              '<div class="comment-right">'+
+                              '<div class="comment-text"><span>我：</span>'+textarea.value+'</div>'+
+                              '<div class="comment-date">'+
+                              getTime()+
+                              '<a class="comment-zan" href="javascript:;" total="0" my="0">赞</a>'+
+                              '<a class="comment-dele" href="javascript:;">删除</a>'+
+                              '</div>'+
+                              '</div>';
+                             //插入到新建的评论div
+                             div.innerHTML = html;
+                             //把新评论插入到评论列表
+                             comment.appendChild(div);
+                             //评论后初始化textarea输入框
+                             textarea.value = "评论…";
+                             textarea.parentNode.className = "hf";
+                         }
+                         //获取当前时间回复评论时调用
+                         function getTime(){
+                             var t=new Date();
+                             var y=t.getFullYear();
+                             var m=t.getMonth()+1;
+                             var d=t.getDate();
+                             var h=t.getHours();
+                             var mi=t.getMinutes();
+                             m=m<10?"0"+m:m;
+                             d=d<10?"0"+d:d;
+                             h=h<10?"0"+h:h;
+                             mi=mi<10?"0"+mi:mi;
+                             return y+"-"+m+"-"+d+""+h+":"+mi;
+                         }
+                         //回复里点赞
+                         function praiseReply(el){
+                             //获取当前total值 也就是所有点赞数量
+                             var total=parseInt(el.getAttribute("total"));
+                             //获取当前my值 我的点赞
+                             var my=parseInt(el.getAttribute("my"));
+                             //创建新的total
+                             var newtotal;
+                             //判断my=0就是我准备要点赞
+                             if(my==0){
+                                 //我点了赞总数量就要+1
+                                 newtotal=total+1;
+                                 //更新total值
+                                 el.setAttribute("total",newtotal);
+                                 //更新my值
+                                 el.setAttribute("my",1);
+                                 //更新文字 就是我点了后 文字就是取消赞了
+                                 el.innerHTML=newtotal+" 取消赞";
+                             }
+                             else{
+                                 //反之-1
+                                 newtotal=total-1;
+                                 el.setAttribute("total",newtotal);
+                                 el.setAttribute("my",0);
+                                 el.innerHTML=(newtotal==0)?" 赞":newtotal+" 赞";
+                             }
+                         }
+                         //操作回复
+                         function operateReply(el){
+                             //每条评论
+                             var comment=el.parentNode.parentNode.parentNode;
+                             //整个状态
+                             var box=comment.parentNode.parentNode.parentNode;
+                             //评论框
+                             var textarea=box.getElementsByTagName("textarea")[0];
+                             //名字
+                             var user=comment.getElementsByClassName("user")[0];
+                             //点击的innerHTML
+                             var txt=el.innerHTML;
+                             //判断当前点击的是否为回复
+                             if(txt=="回复"){
+                                 //评论框触发焦点事件 也就是变高
+                                 textarea.onfocus();
+                                 //内容变为回复+当前人的名字
+                                 textarea.value="回复 "+user.innerHTML;
+                                 //调用键盘事件
+                                 textarea.onkeyup();
+                             }
+                             else{
+                                 //否则就是删除节点
+                                 remove(comment);
+                             }
+                         }
+                         //遍历所有状态消息
+                         for(var i = 0;i < lists.length;i++){
+                             //全部事件代理
+                             lists[i].onclick = function(e){
+                                 //获取当前点击事件
+                                 var e = e||window.event;
+                                 var el = e.srcElement;
+                                 if(!el){
+                                    el = e.target;//兼容火狐
+                                 }
+                                 //判断点击的类名
+                                 switch(el.className){
+                                     //关闭整个状态
+                                     case "close":
+                                         remove(el.parentNode);
+                                         break;
+                                     //上面的点赞
+                                     case "dzan":
+                                         praisebox(el.parentNode.parentNode.parentNode,el);
+                                         break;
+                                     //回复评论
+                                     case "hf-btn hf-btn-on":
+                                         reply(el.parentNode.parentNode.parentNode);
+                                         break;
+                                     //每条评论中点赞
+                                     case "comment-zan":
+                                         praiseReply(el);
+                                         break;
+                                     case "comment-dele":
+                                         operateReply(el);
+                                         break;
+                                 }
+                             }
+                             var textarea=lists[i].getElementsByClassName("hf-text")[0];
+                             //焦点事件
+                             textarea.onfocus = function(){
+                                 this.parentNode.className = 'hf hf-on';
+                                 this.value = this.value == '评论…' ? '' : this.value;
+                             }
+                             //失焦事件
+                             textarea.onblur = function(){
+                                 if(this.value == ''){
+                                     this.parentNode.className='hf';
+                                     this.value ='评论…';
+                                 }
+                             }
+                             //键盘事件
+                             textarea.onkeyup = function(){
+                                 var len = this.value.length;
+                                 var textParentNode = this.parentNode;
+                                 var textBtn = textParentNode.children[1];
+                                 var textNub = textParentNode.children[2];
+                                 if(len == 0 /*|| len>100*/){
+                                    textBtn.className="hf-btn";
+                                 }
+                                 else{
+                                     textBtn.className = "hf-btn hf-btn-on";
+                                     /*this.style.color = "#333"; */
+                                 }
+                                 textNub.innerHTML = len+"/100";
+                            }
+                         }//遍历结束
+                     }
+                  </script>
+                  <br/>
+                  {% for answer2 in answer.answers2 %}
+                      <li>
+                          <div class="user-info1">
+                              <img src="{{ url_for('static',filename='images/logo.png') }}"
+                                   alt="" class="avatar">
+                              <span class="username">{{ answer2.author.username }}&nbsp;&nbsp;回复&nbsp;&nbsp;{{ answer.author.username }}：&nbsp;</span>
+                              <span class="create-time">{{ answer2.create_time }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                              <span class="glyphicon glyphicon-thumbs-up"></span>
+                          </div>
+                          <p class="answer-content1">{{ answer2.content|safe }}</p>
+                      </li>
+                  {% endfor %}
+
+                  <br/>
               </li>
           {% endfor %}
     </ul>
+    <script>
+	/* @author:zxh
+	 * 动态点赞
+	 * 此效果包含css3，部分浏览器不兼容（如：IE10以下的版本）
+	*/
+	$(function(){
+		$("#praise").click(function(){
+			var praise_img = $("#praise-img");
+			var text_box = $("#add-num");
+			var praise_txt = $("#praise-txt");
+			var num = parseInt(praise_txt.text());
+{#            document.getElementById("form").submit();#}
+			if(praise_img.attr("src") == ("{{ url_for('static',filename='images/yizan.png') }}")){
+				$(this).html("<img src=\"{{ url_for('static',filename='images/zan.png') }}\" id='praise-img' class='animation' />");
+				praise_txt.removeClass("hover");
+				text_box.show().html("<em class='add-animation'>-1</em>");
+				$(".add-animation").removeClass("hover");
+				num -= 1;
+				praise_txt.text(num)
+			}
+			else{
+				$(this).html("<img src='{{ url_for('static',filename='images/yizan.png') }}' id='praise-img' class='animation' />");
+				praise_txt.addClass("hover");
+				text_box.show().html("<em class='add-animation'>+1</em>");
+				$(".add-animation").addClass("hover");
+				num += 1;
+				praise_txt.text(num)
+			}
+		});
+	})
+</script>
 {% endblock %}

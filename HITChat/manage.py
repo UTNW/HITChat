@@ -10,9 +10,9 @@
 '''
 from flask_script import Manager
 from flask_migrate import Migrate,MigrateCommand
-from hitqa import app
+from hitchat import app
 from exts import db
-from models import User,Question,Answer,YX_Aiml
+from models import User,Question,Answer,YX_Aiml,Answer
 
 manager = Manager(app)
 
