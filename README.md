@@ -55,20 +55,20 @@
 
 **Created by UTNW(2017.10.01)**
 
-![](https://github.com/UTNW/HITChat/raw/master/time1.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/time1.png)
 
 **Created by UTNW(2017.10.01) Update 2017.10.24**
 
 #### 第一次迭代Burndown Chart
-![](https://github.com/UTNW/HITChat/raw/master/BurndownChart.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/BurndownChart.png)
 
 **Created by UTNW(2017.10.01)**
 
 
 ### 2017.10.1-10.7 任务汇总
-![](https://github.com/UTNW/HITChat/raw/master/onlyoffice1.jpg)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/onlyoffice1.jpg)
 
-![](https://github.com/UTNW/HITChat/raw/master/pic.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/pic.png)
 
 #### 这是HITChat 1.0 版本，目前实现的功能有：注册、登录、发布问答、查询、评论
 
@@ -82,22 +82,22 @@
   首先进入虚拟环境的命令环境下，其次，进入到manage.py项目文件目录下，依次在命令行窗口下执行如下两条命令：python manage.py db migrate 和 python manage.py db upgrade ,映射成功，可到数据库命令行窗口查看
 
 **详细页面展示：**
-![](https://github.com/UTNW/HITChat/raw/master/login.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/login.png)
 
-![](https://github.com/UTNW/HITChat/raw/master/register.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/register.png)
 
-![](https://github.com/UTNW/HITChat/raw/master/first_page.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/first_page.png)
 
-![](https://github.com/UTNW/HITChat/raw/master/question.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/question.png)
 
-![](https://github.com/UTNW/HITChat/raw/master/answer.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/answer.png)
 
 ###### 总结：在我们小组成员的共同努力下，第一次任务基本完成
 **Created by UTNW(2017.10.09)**
 
 
 ### 2017.10.8-10.14 任务汇总
-![](https://github.com/UTNW/HITChat/raw/master/onlyoffice2.jpg)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/onlyoffice2.jpg)
 
 #### 这是HITChat 2.0 版本，目前实现的功能有：注册、登录、发布问答、查询、评论、个人中心界面。
 ##### 本周任务：
@@ -108,21 +108,21 @@
 >* 个人中心界面（自定义用户头像、用户信息、查看发布问答信息等）
 
 **详细页面展示：**
-![](https://github.com/UTNW/HITChat/raw/master/login1.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/login1.png)
 
-![](https://github.com/UTNW/HITChat/raw/master/register1.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/register1.png)
 
-![](https://github.com/UTNW/HITChat/raw/master/question1.jpg)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/question1.jpg)
 
-![](https://github.com/UTNW/HITChat/raw/master/detail1.jpg)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/detail1.jpg)
 
-![](https://github.com/UTNW/HITChat/raw/master/user1.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/user1.png)
 
 ###### 总结：在我们小组成员的共同努力下，第二次任务按照预定计划基本完成
 **Created by UTNW(2017.10.17)**
 
 ### 2017.10.15-10.21 任务汇总
-![](https://github.com/UTNW/HITChat/raw/master/onlyoffice3.jpg)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/onlyoffice3.jpg)
 
 #### 这是HITChat 2.1 版本，目前实现的功能有：注册、登录、发布问答、查询、评论、个人中心界面，用户对评论和文章进行点赞和评论。
 
@@ -131,8 +131,9 @@
 
 **详细页面展示：**
 
-![](https://github.com/UTNW/HITChat/raw/master/praise1.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/praise1.png)
 
-![](https://github.com/UTNW/HITChat/raw/master/praise2.png)
+![](https://github.com/UTNW/HITChat/raw/first_iteration/praise2.png)
 
 ###### 总结：在我们小组成员的共同努力下，第三次任务按照预定计划基本完成
+**Created by UTNW(2017.10.24)**
