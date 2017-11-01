@@ -1,0 +1,130 @@
+html, body {
+    margin: 0;
+    background: url('hit1.jpg') no-repeat 0px 5px;
+    background-size:100%;
+    /*background: rgba(255,255,255,0.7);*/
+    font-family: "宋体";
+}
+.wrapper {
+    height: 670px;
+    width: 520px;
+    padding: 5px;
+    margin: 0 auto;
+    /*background-color: #f0f1e6;*/
+    background: rgba(255,255,255,0.7);
+}
+.group-text{
+   margin: 0 auto;
+   width: 600px;
+}
+#loginWrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(5, 5, 5, 0.6);
+    text-align: center;
+    color: #fff;
+    display: block;
+    padding-top: 200px;
+}
+.nickWrapper {
+    margin: 0 auto;
+    width: 500px;
+    height: 640px;
+}
+.nickWrapper .form-control {
+    width: 400px;
+    margin: 0 auto;
+}
+.nickWrapper .btn-block {
+    width: 100px;
+    margin: 0 auto;
+}
+.banner {
+    /*height: 80px;*/
+    width: 100%;
+    border-bottom: 1px solid #4c4c4c;
+}
+.banner p {
+    float: left;
+    display: inline-block;
+}
+.controls {
+    height: 120px;
+    margin: 0 auto;
+    position: relative;
+}
+#historyMsg {
+    height: 395px;
+    margin: 0 auto;
+    /*background-color: #f0f1e6;*/
+    /*background: rgba(255,255,255,0.7);*/
+    overflow: auto;
+    padding: 10px;
+}
+#historyMsg img {
+    max-width: 60%;
+}
+.timespan {
+    color: #717171;
+}
+.items {
+    /*height: 30px;*/
+}
+#colorStyle {
+    width: 20px;
+    border: none;
+    padding: 0;
+    display: none;
+}
+/*custom the file input*/
+
+.imageLable {
+    position: relative;
+}
+#sendImage {
+    position: absolute;
+    width: 52px;
+    left: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+/*end custom file input*/
+
+#messageInput {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+#sendBtn {
+    width: 80px;
+    float: right;
+}
+#emojiWrapper {
+    display: none;
+    width: 500px;
+    bottom: 105px;
+    position: absolute;
+    background-color: #aaa;
+    box-shadow: 0 0 10px #555;
+}
+#emojiWrapper img {
+    margin: 2px;
+    padding: 2px;
+    width: 30px;
+    height: 30px;
+}
+#emojiWrapper img:hover {
+    background-color: blue;
+}
+.emoji{
+    display: inline;
+}
+.button{
+    margin-top: 5px;
+}
+footer {
+    text-align: center;
+}

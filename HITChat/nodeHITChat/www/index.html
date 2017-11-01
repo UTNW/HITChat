@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="author" content="zxh">
+        <meta name="description" content="HITChat | a simple chat application built with node.js and websocket">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HITChat</title>
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <meta charset="UTF-8">
+        <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous"></script>
+        <!--<link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}">-->
+        <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <br/><br/>
+        <div class="wrapper">
+            <div class="banner">
+                <h2 style="text-align: center">哈工大交流平台</h2>
+                <center><span id="status">&nbsp;</span></center>
+            </div>
+            <div id="historyMsg"></div>
+            <div class="controls" >
+                <div class="items">
+                    <!--<input id="colorStyle" type="color" title="font color" />-->
+                    <label for="colorStyle">
+                        <span class="glyphicon glyphicon-font" title="font color"></span>&nbsp;
+                        <input id="colorStyle" type="color" title="font color"></input>&nbsp;
+                    </label>
+                    <!--<input id="emoji" type="button" value="emoji" title="emoji" />-->
+                    <span id="emoji" class="glyphicon glyphicon-heart" value="emoji" title="emoji"></span>&nbsp;
+                    <label for="sendImage" class="imageLable">
+                        <!--<input type="button" value="image"  />-->
+                        <span class="glyphicon glyphicon-picture" value="image" title="picture"></span>&nbsp;
+                        <input id="sendImage" type="file" value="image"/>
+                    </label>
+                    <!--<input id="clearBtn" type="button" value="clear" title="clear screen" />-->
+                    <span id="clearBtn" class="glyphicon glyphicon-trash" title="clear screen" value="clear"></span>
+                </div>
+                <!--<div class="group-text">-->
+                <!--<input type="text" class="form-control" placeholder="请输入内容" id="messageInput"/><br/>-->
+                <textarea id="messageInput"  rows="5" placeholder="请输入内容" class="form-control" required></textarea>
+                <!--</div>-->
+                <!--<br/>-->
+                <!--<div class="form-group1">-->
+                <div class="button">
+                    <button id="sendBtn" class="btn btn-primary">发送</button>
+                </div>
+                <!--<textarea id="messageInput" placeHolder="enter to send"></textarea>-->
+                <!--<input id="sendBtn" type="button" value="SEND">-->
+                <div id="emojiWrapper"></div>
+            </div>
+        </div>
+        <div id="loginWrapper">
+            <p id="info">一大批小伙伴正在赶来...</p>
+            <div class="nickWrapper">
+                <input type="text" class="form-control" placeholder="昵称" id="nicknameInput"/><br/>
+                <button class="btn btn-primary btn-block" id="loginBtn">OK</button>
+            </div>
+            <!--<div id="nickWrapper">-->
+                <!--<input type="text" placeHolder="nickname" id="nicknameInput" />-->
+                <!--<input type="button" value="OK" id="loginBtn" />-->
+            <!--</div>-->
+        </div>
+        <!--<footer>-->
+            <!--<small>view on <a href="https://github.com/Wayou/HiChat">GitHub</a> | <a href="mailto:liuwayong@gmail.com">contact me</a></small>-->
+        <!--</footer>-->
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="scripts/hichat.js"></script>
+        <script>
+            /**REMOVE ME IF YOU CANT ACCESS GOOGLE SERVICE**/
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            /**REMOVE END**/
+        </script>
+    </body>
+</html>
