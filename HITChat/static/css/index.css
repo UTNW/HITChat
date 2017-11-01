@@ -30,8 +30,12 @@ ul.question-list-group li{
 }
 
 .question-info{
-    text-align: right;
+    color: #aeb1a0;
 }
+.question-info .glyphicon glyphicon-eye-open{
+    margin-left: 40px;
+}
+
 
 .question-info .question-author{
     margin-right: 20px;

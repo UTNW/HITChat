@@ -10,9 +10,9 @@
 '''
 import os
 
-HOSTNAME = 'localhost'
+HOSTNAME = '127.0.0.1'
 PORT     = '3306'
-DATABASE = 'hitqa'
+DATABASE = 'hitchat'
 USERNAME = 'root'
 PASSWORD = ''
 DB_URI = 'mysql+mysqldb://{}:{}@{}:{}/{}?charset=utf8'.format(USERNAME,PASSWORD,

@@ -4,10 +4,19 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    <style>
+        <!--
+            #pages { color:#666 }
+            #pages span { border:1px solid #ddd; line-height:1.2; margin:0 3px; padding:3px 4px; color:#ccc }
+            #pages span a { text-decoration:none; color:#333333 }
+            #pages span a:hover{ color: red;}
+            #pages strong { color:#FF0000; padding:0 3px; font-weight:bold }
+            li{ list-style-type:none; color:#333333; line-height:30px;}
+        -->
+    </style>
 {% endblock %}
-
 {% block main %}
-   <ul class="question-list-group">
+    <ul class="question-list-group" id="pageContent">
        {% for question in questions %}
            <li>
                <div class="avatar-group">
@@ -18,11 +27,165 @@
                    <p class="question-title"><a href="{{ url_for('detail',question_id=question.id) }}">{{ question.title }}</a></p>
 {#                   <p class="question-content">{{ question.content }}</p>#}
                    <div class="question-info">
-                       <span class="question-author">{{ question.author.username }}</span>
+                       &nbsp;&nbsp;
+                       <span class="glyphicon glyphicon-eye-open">&nbsp;<span id="{{ question.id }}"></span></span>&nbsp;&nbsp;
+                       <span class="glyphicon glyphicon-thumbs-up"> &nbsp;</span>
+                       <span class="question-author">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.author.username }}</span>
                        <span class="question-time">{{ question.create_time }}</span>
                    </div>
                </div>
            </li>
+           <script>
+                if (localStorage.pagecount){
+                    localStorage.pagecount=Number(localStorage.pagecount)+1;
+                }
+                else{
+                    localStorage.pagecount=1;
+                }
+                document.getElementById({{ question.id }}).innerHTML=localStorage.pagecount;
+           </script>
        {% endfor %}
-   </ul>
+    </ul>
+    <style type="text/css">
+    <!--
+    #pages{ color:#666;text-align: center}
+    #pages span{ border:1px solid #ddd; line-height:1.2; margin:0 3px; padding:3px 4px; color:#ccc }
+    #pages span a{ text-decoration:none; color:#333333}
+    #pages span a:hover{}
+    #pages strong{ color:#FF0000; padding:0 3px; font-weight:bold}
+    -->
+    </style>
+    <div id="pages">
+        <span id="spanFirst">首页</span>
+        <span id="spanPre">上一页</span>
+        <span id="spanNext">下一页</span>
+        <span id="spanLast">尾页
+        </span> 第<strong id="spanPageNum">
+        </strong>页/共<strong id="spanTotalPage">
+        </strong>页
+    </div>
+    <script type="text/javascript">
+        var theUL = document.getElementById("pageContent");
+        var totalPage = document.getElementById("spanTotalPage");
+        var pageNum = document.getElementById("spanPageNum"); //获取当前页<span>
+        var spanPre = document.getElementById("spanPre"); //获取上一页<span>
+        var spanNext = document.getElementById("spanNext"); //获取下一页<span>
+        var spanFirst = document.getElementById("spanFirst"); //获取第一页<span>
+        var spanLast = document.getElementById("spanLast"); //获取最后一页<span>
+        var numberRowsInTable = theUL.getElementsByTagName("li").length; //记录总条数
+        var pageSize = 6; //每页显示的记录条数
+        var page = 1; //当前页，默认第一页
+        //下一页
+        function next(){
+            hideTable();
+            currentRow = pageSize * page;
+            maxRow = currentRow + pageSize;
+            if ( maxRow > numberRowsInTable ) maxRow = numberRowsInTable;
+            for ( var i = currentRow; i< maxRow; i++ ){
+                theUL.getElementsByTagName("li")[i].style.display = '';
+            }
+            page++;
+            if ( maxRow == numberRowsInTable ) {
+                nextText();
+                lastText();
+            }
+            showPage();
+            preLink();
+            firstLink();
+        }
+        //上一页
+        function pre(){
+            hideTable();
+            page--;
+            currentRow = pageSize * page;
+            maxRow = currentRow - pageSize;
+            if ( currentRow > numberRowsInTable ) currentRow = numberRowsInTable;
+            for ( var i = maxRow; i< currentRow; i++ ){
+                theUL.getElementsByTagName("li")[i].style.display = '';
+            }
+            if ( maxRow == 0 ){
+                preText();
+                firstText();
+            }
+            showPage();
+            nextLink();
+            lastLink();
+        }
+        //第一页
+        function first(){
+            hideTable();
+            page = 1;
+            for ( var i = 0; i<pageSize; i++ ){
+                theUL.getElementsByTagName("li")[i].style.display = '';
+            }
+            showPage();
+            firstText();
+            preText();
+            nextLink();
+            lastLink();
+        }
+        //最后一页
+        function last(){
+            hideTable();
+            page = pageCount();
+            currentRow = pageSize * (page - 1);
+            for ( var i = currentRow; i<numberRowsInTable; i++ ){
+                theUL.getElementsByTagName("li")[i].style.display = '';
+            }
+            showPage();
+            preLink();
+            nextText();
+            firstLink();
+            lastText();
+        }
+
+        function hideTable(){
+            for ( var i = 0; i<numberRowsInTable; i++ ){
+                theUL.getElementsByTagName("li")[i].style.display = 'none';
+            }
+        }
+        function showPage(){
+            pageNum.innerHTML = page;
+        }
+        //总共页数
+        function pageCount(){
+            return Math.ceil(numberRowsInTable/pageSize);
+        }
+        //显示链接
+        function preLink(){
+            spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>";
+        }
+        function preText(){
+            spanPre.innerHTML = "上一页";
+        }
+        function nextLink(){
+            spanNext.innerHTML = "<a href='javascript:next();'>下一页</a>";
+        }
+        function nextText(){
+            spanNext.innerHTML = "下一页";
+        }
+        function firstLink(){
+            spanFirst.innerHTML = "<a href='javascript:first();'>首页</a>";
+        }
+        function firstText(){
+            spanFirst.innerHTML = "首页";
+        }
+        function lastLink(){
+            spanLast.innerHTML = "<a href='javascript:last();'>末页</a>";
+        }
+        function lastText(){
+            spanLast.innerHTML = "末页";
+        }
+        //隐藏
+        function hide(){
+            for ( var i = pageSize; i<numberRowsInTable; i++ ){
+                theUL.getElementsByTagName("li")[i].style.display = 'none';
+            }
+            totalPage.innerHTML = pageCount();
+            pageNum.innerHTML = '1';
+            nextLink();
+            lastLink();
+        }
+        hide();
+    </script>
 {% endblock %}

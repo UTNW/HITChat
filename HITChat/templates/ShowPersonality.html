@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ShowPersonalityMessage</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style type="text/css">
+    .size {
+        width:180px;
+        height:120px;
+        margin-left:22%;
+        margin-bottom:10px;
+    }
+    .size1 {
+        margin-left:22%;
+    }
+</style>
+</head>
+<body>
+
+<ul class="nav nav-pills nav-stacked">
+    <li class="active" style="font-size:20px; font-family:'楷体'"><a ><span class="glyphicon glyphicon-align-justify"></span>个人中心</a></li>
+</ul>
+
+
+<div class="line">
+ <div class="col-sm-9 col-md-3">
+    <div class="thumbnail">
+      <div class="caption">
+
+<div class="list-group">
+    <img src="{{ url_for('static', filename='images/'+ usermsg.telephone +'.png') }}" alt="...图像加载失败" class="size"><br>
+    <label class="size1" style="font-size:16px; font-family:'楷体'">用户名：{{usermsg.username}}</label><br>
+    <label class="size1" style="font-size:16px; font-family:'楷体'">座右铭：{{usermsg.motto}}</label><br><br>
+
+    <!--<a href="BasicMessage.html" class="list-group-item active">基本资料</a>-->
+    <!--<a href="Education.html" class="list-group-item">教育背景</a>-->
+    <!--<a href="Work.html" class="list-group-item">工作信息</a>-->
+    <!--<a href="HeadPortrait.html" class="list-group-item">头像设置</a>-->
+<ul class="nav nav-pills nav-stacked">
+    <a href="{{ url_for('showbasicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>基本资料</a>
+    <a href="{{ url_for('showpersonalitymessage') }}" class="list-group-item active"><span class="glyphicon glyphicon-send"></span>个性资料</a>
+    <a href="{{ url_for('userquestion') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>发表的帖子</a>
+</ul>
+<br><br><br>
+<ul class="nav nav-pills nav-stacked">
+    <a href="{{ url_for('basicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑资料</a>
+</ul>
+
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="line">
+ <div class="col-sm-9 col-md-8">
+    <div class="thumbnail">
+      <div class="caption">
+
+ <div class="list-group">
+
+ <ul class="nav nav-pills nav-stacked">
+ <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>个性资料</a></li>
+ </ul>
+
+    <br><br>
+
+<label class="inline   col-md-offset-1">座右铭：&nbsp&nbsp&nbsp&nbsp</label>
+     <label>{{usermsg.motto}}</label>
+
+    <br><br>
+
+<label class="inline   col-md-offset-1">爱好：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+     <label>{{usermsg.hobby}}</label>
+
+    <br><br>
+
+<label class="inline   col-md-offset-1">出生地：&nbsp&nbsp&nbsp&nbsp</label>
+     <label>{{usermsg.birthplace}}</label>
+
+    <br><br>
+
+<label class="inline   col-md-offset-1">居住地：&nbsp&nbsp&nbsp&nbsp</label>
+     <label>{{usermsg.liveplace}}</label>
+
+     <br><br>
+
+<label class="inline  col-md-offset-1">教育程度：</label>
+     <label>{{usermsg.education}}</label>
+
+     <br><br>
+
+<label class="inline   col-md-offset-1">个人简介：</label>
+     <label>{{usermsg.resume}}</label>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

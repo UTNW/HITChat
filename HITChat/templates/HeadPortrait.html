@@ -2,32 +2,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- 最新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-
-<!-- 可选的Bootstrap主题文件（一般不用引入） -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
-
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <title>HeadPortrait</title>
-<style type="text/css">
-.size{
-	width:180px;
-	height:120px;
-	margin-left:8.5%;
-	margin-bottom:10px;
-}
-</style>
+    <style type="text/css">
+    .size {
+        width:180px;
+        height:120px;
+        margin-left:8.5%;
+        margin-bottom:10px;
+    }
+    .size1 {
+        margin-left:22%;
+    }
+    .size2 {
+        width:180px;
+        height:120px;
+        margin-left:22%;
+        margin-bottom:10px;
+    }
+    </style>
 </head>
 <body>
 
-  <ul class="nav nav-pills nav-stacked">
-  <li class="active"><a href="#"><span class="glyphicon glyphicon-align-justify"></span>教育背景</a></li>
-  </ul>
+<ul class="nav nav-pills nav-stacked">
+    <li class="active" style="font-size:20px; font-family:'楷体'"><a ><span class="glyphicon glyphicon-align-justify"></span>个人中心</a></li>
+</ul>
 
 
 <div class="line">
@@ -37,18 +38,25 @@
 
 <div class="list-group">
 
- <ul class="nav nav-pills nav-stacked">
- <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>个人设置</a></li>
- </ul>
+    <img src="{{ url_for('static', filename='images/'+ usermsg.telephone +'.png')}}" alt="...图像加载失败" class="size2"><br>
+    <label class="size1" style="font-size:16px; font-family:'楷体'">用户名：{{usermsg.username}}</label><br>
+    <label class="size1" style="font-size:16px; font-family:'楷体'">座右铭：{{usermsg.motto}}</label><br><br>
 
- <a href="BasicMessage.html" class="list-group-item">基本资料</a>
- <a href="Education.html" class="list-group-item">教育背景</a>
- <a href="Work.html" class="list-group-item">工作信息</a>
- <a href="HeadPortrait.html" class="list-group-item active">头像设置</a>
- <br></br>
+     <!--<a href="BasicMessage.html" class="list-group-item">基本资料</a>-->
+     <!--<a href="Education.html" class="list-group-item">教育背景</a>-->
+     <!--<a href="Work.html" class="list-group-item">工作信息</a>-->
+     <!--<a href="HeadPortrait.html" class="list-group-item active">头像设置</a>-->
 
- <br></br>
- <img src="image/3.jpg" alt="..." class="img-thumbnail">
+<ul class="nav nav-pills nav-stacked">
+    <a href="{{ url_for('basicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑基本资料</a>
+    <a href="{{ url_for('personalitymessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑个性资料</a>
+    <a href="{{ url_for('headportrait') }}" class="list-group-item active"><span class="glyphicon glyphicon-send"></span>更改头像</a>
+</ul>
+    <br><br><br>
+<ul class="nav nav-pills nav-stacked">
+    <a href="{{ url_for('showbasicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>返回个人中心</a>
+</ul>
+
 </div>
 
       </div>
@@ -63,23 +71,22 @@
  <div class="list-group">
 
  <ul class="nav nav-pills nav-stacked">
- <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>头像设置</a></li>
+ <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>更改头像</a></li>
  </ul>
 
-<form action="#" enctype="multipart/form-data" method="POST" >
+<form action="{{url_for('uploadpic')}}" enctype="multipart/form-data" method="POST" >
 
 <br>
 <br>
 	  <h2 class="col-md-offset-1" style="font-size:20px; font-family:'楷体'; font-weight:bold">选择本地图片</h2>
-      <input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" class="col-md-offset-1" style="font-size:16px; font-family:'楷体'"/>
+      <input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" class="col-md-offset-1" style="font-size:16px; font-family:'楷体'" name="picture"/>
       <h2 class="col-md-offset-1" style="font-size:20px; font-family:'楷体'; font-weight:bold">图片预览</h2>
       <img id="xmTanImg" class="size"/><br>
-      <input type="submit" value="上传" class="btn btn-primary col-md-offset-1"/>
+      <input type="submit" value="保存" class="btn btn-primary col-md-offset-1"/>
 </form>
 	<br>
 	<br>
 	<br>
-	<a href="#" class="btn btn-primary btn-lg col-md-offset-1">保存</a>
 
 			<script type="text/javascript">
             //判断浏览器是否支持FileReader接口

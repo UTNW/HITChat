@@ -2,7 +2,7 @@
 from flask import Flask,render_template,request,redirect,url_for,session,g,send_from_directory,make_response
 from werkzeug import secure_filename
 import config
-from models import User,Question,Answer,YX_Aiml
+from models import User,Question,Answer,YX_Aiml,Answer2
 from exts import db
 from decorators import login_required
 from sqlalchemy import or_
@@ -21,44 +21,119 @@ db.init_app(app)
 global kernel
 kernel = aiml.Kernel()
 flag = True
-#############################################################################
-ALLOWED_EXTENSIONS = set(['xml','html','aiml','png'])
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
-
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
-
-@app.route('/uploadfiles/', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            os.chdir('/PythonProgramming/hitproject/hitqa/hitqa/Robot')
-            #print os.getcwd()
-            file.save(os.path.join(os.getcwd(),'upload_'+filename))
-            kernel.learn('upload_'+filename)
-            file_url = url_for('uploaded_file', filename=filename)
-            return redirect(url_for('aiml_detail'))
-#############################################################################
-@app.route('/test/')
-@login_required
+@app.route('/test')
 def test():
-    return render_template('test.html')
+    context = {
+        'questions': Question.query.order_by(db.desc(Question.create_time)).all()
+    }
+    return render_template('Work.html',**context)
 
 @app.route('/')
 @login_required
 def index():
     context = {
-        'questions': Question.query.order_by('-create_time').all()
+        'questions': Question.query.order_by(db.desc(Question.create_time)).all()
     }
     return render_template('index.html',**context)
+
+###################################################################
+#修改基本信息
+@app.route('/basicmessage/')
+def basicmessage():
+    return render_template('BasicMessage.html', usermsg=g.user)
+
+#修改个性信息
+@app.route('/personalitymessage/')
+def personalitymessage():
+    return render_template('PersonalityMessage.html', usermsg=g.user)
+
+#展示基本信息
+@app.route('/showbasicmessage/',methods=['POST', 'GET'])
+def showbasicmessage():
+    username = request.form.get('username')
+    realname = request.form.get('realname')
+    gender = request.form.get('gender')
+    institude = request.form.get('institude')
+    contactway = request.form.get('contactway')
+    birthyear = request.form.get('birthyear')
+    birthmonth = request.form.get('birthmonth')
+    birthday = request.form.get('birthday')
+
+    # 得到当前用户的User表
+    usermsg = g.user
+    if username:
+        usermsg.username = username
+    if realname:
+        usermsg.realname = realname
+    if gender:
+        usermsg.gender = gender
+    if contactway:
+        usermsg.contactway = contactway
+    if birthyear:
+        usermsg.birthyear = birthyear
+    if birthmonth:
+        usermsg.birthmonth = birthmonth
+    if birthday:
+        usermsg.birthday = birthday
+    if institude:
+        usermsg.institude = institude
+
+    db.session.add(usermsg)
+    db.session.commit()
+
+    return render_template('ShowBasic.html', usermsg=g.user)
+
+#展示个性信息
+@app.route('/showpersonalitymessage/', methods=['POST', 'GET'])
+def showpersonalitymessage():
+    motto = request.form.get('motto')
+    hobby = request.form.get('hobby')
+    birthplace = request.form.get('birthplace')
+    liveplace = request.form.get('liveplace')
+    education = request.form.get('education')
+    resume = request.form.get('resume')
+
+    usermsg = g.user
+    if motto:
+        usermsg.motto = motto
+    if hobby:
+        usermsg.hobby = hobby
+    if birthplace:
+        usermsg.birthplace = birthplace
+    if liveplace:
+        usermsg.liveplace = liveplace
+    if education:
+        usermsg.education = education
+    if resume:
+        usermsg.resume = resume
+
+    db.session.add(usermsg)
+    db.session.commit()
+
+    return render_template('ShowPersonality.html', usermsg=g.user)
+
+#头像设置
+@app.route('/headportreait/')
+def headportrait():
+    return render_template('HeadPortrait.html', usermsg=g.user)
+
+#上传图片
+@app.route('/uploadpic/', methods=['GET', 'POST'])
+def uploadpic():
+    if request.method == 'POST':
+        file = request.files['picture']
+        if file:
+            file.save(os.path.join(os.getcwd(), 'static/images/' + str(g.user.telephone) + '.png'))
+            return redirect(url_for('showbasicmessage'))
+
+#展示用户所有帖子
+@app.route('/userquestion/')
+def userquestion():
+    userquestionmsg = Question.query.filter(Question.author_id == g.user.id)
+    return render_template('UserQuestion.html', userquestionmsg=userquestionmsg, usermsg=g.user)
+
+#####################################################################
 
 @app.route('/login/',methods=['GET','POST'])
 def login():
@@ -81,6 +156,7 @@ def login():
                 return render_template('login_warning.html')
         else:
             return render_template('login_warning.html')
+
 @app.route('/register/',methods=['GET','POST'])
 def register():
     if request.method == 'GET':
@@ -103,12 +179,14 @@ def register():
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('login'))
+
 @app.route('/logout/')
 def logout():
     # session.pop('user_id')
     # del session('user_id')
     session.clear()
     return redirect(url_for('login'))
+
 @app.route('/question/',methods=['GET','POST'])
 @login_required
 def question():
@@ -116,6 +194,7 @@ def question():
         return render_template('question.html')
     else:
         title = request.form.get('title')
+        label = request.form.get('label')
         content = request.form.get('content')
         # for i in content:
         #     print i
@@ -128,7 +207,7 @@ def question():
         #      else:
         #          content += Listcontent[i]
         # print title,content
-        question = Question(title=title,content=content)
+        question = Question(title=title,label=label,content=content)
         question.author = g.user
         db.session.add(question)
         db.session.commit()
@@ -142,7 +221,7 @@ def aiml_detail():
     #####################################################################
     global flag
     if flag:
-        os.chdir("\Robot")  # 打开aiml库
+        os.chdir("Robot")  # 打开aiml库
         #kernel = aiml.Kernel()
         # if os.path.isfile("bot_brain.brn"):
         #     kernel.bootstrap(brainFile = "bot_brain.brn")
@@ -191,7 +270,6 @@ def detail(question_id):
 def add_answer():
     content = request.form.get('answer_content')
     question_id = request.form.get('question_id')
-
     answer = Answer(content=content)
     answer.author = g.user
     question = Question.query.filter(Question.id == question_id).first()
@@ -200,11 +278,37 @@ def add_answer():
     db.session.commit()
     return redirect(url_for('detail',question_id=question_id))
 
+@app.route('/add_answer2/',methods=['POST'])
+@login_required
+def add_answer2():
+    content = request.form.get('answer2')
+    answer_id = request.form.get('answer_id')
+    question_id = request.form.get('question_id')
+    print content,answer_id
+    answer2 = Answer2(content=content)
+    answer2.author = g.user
+    answer = Answer.query.filter(Answer.id == answer_id).first()
+    answer2.answer = answer
+    db.session.add(answer2)
+    db.session.commit()
+    return redirect(url_for('detail',question_id=question_id))
+
+@app.route('/add_zan/',methods=['POST'])
+@login_required
+def add_zan():
+    question_id = request.form.get('question_id')
+    zan = request.form.get('zannum')
+    question = Question.query.filter(Question.id == question_id).first()
+    question.zan = zan
+    db.session.add(question)
+    db.session.commit()
+    return redirect(url_for('detail',question_id=question_id))
+
 @app.route('/search/')
 def search():
     q = request.args.get('q')
     questions=Question.query.filter(or_(Question.title.contains(q),
-                              Question.content.contains(q))).order_by('-create_time')
+                              Question.content.contains(q))).order_by(db.desc(Question.create_time))
     return render_template('index.html',questions=questions)
 
 def gen_rnd_filename():
@@ -256,5 +360,6 @@ def my_context_processor():
     if hasattr(g,'user'):
         return {'user':g.user}
     return {}
+
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',threaded=True)

@@ -13,6 +13,24 @@
         <template>
 			<learn>basic_chat.aiml</learn>
 			<learn>BuyTicket.aiml</learn>
+			<learn>2.aiml</learn>
+			<learn>bye.aiml</learn>
+			<learn>cnNameGame.aiml</learn>
+			<learn>forget.aiml</learn>
+			<learn>name.aiml</learn>
+			<learn>other.aiml</learn>
+			<learn>std_1.aiml</learn>
+			<learn>std_3.aiml</learn>
+			<learn>test4.aiml</learn>
+			<learn>test.aiml</learn>
+			<learn>test1.aiml</learn>
+			<learn>test3.aiml</learn>
+			<learn>testCNAIML.aiml</learn>
+			<learn>txt1.aiml</learn>
+			<learn>User.aiml</learn>
+			<learn>why.aiml</learn>
+			<learn>twowordpro.aiml</learn>
+			<learn>samemeaning.aiml</learn>
         </template>
     </category>
 </aiml>

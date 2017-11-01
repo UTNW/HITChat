@@ -225,3 +225,12 @@ body {
 .parent.test{
   color: white;
 }
+
+.row{
+  position: relative;
+  top:10px;
+  left:32%;
+}
+.row .input-group{
+  width: 450px;
+}

@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<!-- 最新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-
-<!-- 可选的Bootstrap主题文件（一般不用引入） -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
-
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
-<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<title>BasicMessage</title>
+    <meta charset="UTF-8">
+    <title>BasicMessage</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style type="text/css">
+    .size {
+        width:180px;
+        height:120px;
+        margin-left:22%;
+        margin-bottom:10px;
+    }
+    .size1 {
+        margin-left:22%;
+    }
+</style>
 </head>
 <body>
 
-  <ul class="nav nav-pills nav-stacked">
-  <li class="active"><a href="#"><span class="glyphicon glyphicon-align-justify"></span>教育背景</a></li>
-  </ul>
+<ul class="nav nav-pills nav-stacked">
+    <li class="active" style="font-size:20px; font-family:'楷体'"><a ><span class="glyphicon glyphicon-align-justify"></span>个人中心</a></li>
+</ul>
 
 
 <div class="line">
@@ -28,19 +30,25 @@
       <div class="caption">
 
 <div class="list-group">
+    <img src="{{ url_for('static', filename='images/'+ usermsg.telephone +'.png') }}" alt="...图像加载失败" class="size"><br>
+    <label class="size1" style="font-size:16px; font-family:'楷体'">用户名：{{usermsg.username}}</label><br>
+    <label class="size1" style="font-size:16px; font-family:'楷体'">座右铭：{{usermsg.motto}}</label><br><br>
 
- <ul class="nav nav-pills nav-stacked">
- <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>个人设置</a></li>
- </ul>
+    <!--<a href="BasicMessage.html" class="list-group-item active">基本资料</a>-->
+    <!--<a href="Education.html" class="list-group-item">教育背景</a>-->
+    <!--<a href="Work.html" class="list-group-item">工作信息</a>-->
+    <!--<a href="HeadPortrait.html" class="list-group-item">头像设置</a>-->
+<ul class="nav nav-pills nav-stacked">
+    <a href="{{ url_for('basicmessage') }}" class="list-group-item active"><span class="glyphicon glyphicon-send"></span>编辑基本资料</a>
+    <a href="{{ url_for('personalitymessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑个性资料</a>
+    <a href="{{ url_for('headportrait') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>更改头像</a>
+</ul>
+    <br><br><br>
+<ul class="nav nav-pills nav-stacked">
+    <a href="{{ url_for('showbasicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>返回个人中心</a>
+</ul>
+    <br><br><br>
 
- <a href="BasicMessage.html" class="list-group-item active">基本资料</a>
- <a href="Education.html" class="list-group-item">教育背景</a>
- <a href="Work.html" class="list-group-item">工作信息</a>
- <a href="HeadPortrait.html" class="list-group-item">头像设置</a>
- <br></br>
-
- <br></br>
- <img src="image/3.jpg" alt="..." class="img-thumbnail">
 </div>
 
       </div>
@@ -57,29 +65,41 @@
  <div class="list-group">
 
  <ul class="nav nav-pills nav-stacked">
- <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>基本资料</a></li>
+ <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑基本资料</a></li>
  </ul>
 
- <br></br>
+ <br><br>
+<form action="{{ url_for('showbasicmessage')}}" method="POST">
 
-<label class="col-md-offset-1">性别：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+<label class="inline   col-md-offset-1">用户名：&nbsp&nbsp&nbsp&nbsp</label>
+    <label class="select-inline">
+    <input type="text" class="form-control" placeholder="{{usermsg.username}}" name="username">
+</label>
+
+<br><br>
+
+<label class="inline   col-md-offset-1">真实姓名：</label>
+    <label class="select-inline">
+    <input type="text" class="form-control" placeholder="{{usermsg.realname}}" name="realname">
+</label>
+
+<br><br>
+
+<label class="col-md-offset-1">性别：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
 
 <label class="radio-inline">
-  <input type="radio" value="man"> 男
+    <input type="radio" value="男" name="gender" placeholder="{{usermsg.gender}}"> 男
 </label>
-
 <label class="radio-inline col-md-offset-2">
-  <input type="radio" value="woman"> 女
+    <input type="radio" value="女" name="gender" placeholder="{{usermsg.gender}}"> 女
 </label>
 
-
-<br></br>
-
+ <br><br>
 
 <label class="inline col-md-offset-1">出生日期：</label>
 
 <label class="select-inline">
-<select class="form-control">
+<select class="form-control" name="birthyear">
   <option>1996年</option>
   <option>1997年</option>
   <option>1998年</option>
@@ -99,7 +119,7 @@
 </label>
 
 <label class="select-inline">
-<select class="form-control">
+<select class="form-control" name="birthmonth">
   <option>1月</option>
   <option>2月</option>
   <option>3月</option>
@@ -115,47 +135,72 @@
 </select>
 </label>
 
-<br></br>
-
-<label class="inline  col-md-offset-1">血型：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
 <label class="select-inline">
-<select class="form-control">
-  <option>A型</option>
-  <option>B型</option>
-  <option>O型</option>
-  <option>AB型</option>
+<select class="form-control" name="birthday">
+    <option>1日</option><option>2日</option><option>3日</option><option>4日</option><option>5日</option><option>6日</option>
+    <option>7日</option><option>8日</option><option>9日</option><option>10日</option><option>11日</option><option>12日</option>
+    <option>13日</option><option>14日</option><option>15日</option><option>16日</option><option>17日</option><option>18日</option>
+    <option>19日</option><option>20日</option><option>21日</option><option>22日</option><option>23日</option><option>24日</option>
+    <option>25日</option><option>26日</option><option>27日</option><option>28日</option><option>29日</option><option>30日</option><option>31日</option>
+
 </select>
 </label>
 
-<br></br>
+<br><br>
 
-<label class="inline   col-md-offset-1">出生地：&nbsp&nbsp&nbsp&nbsp</label>
+
+<label class="inline  col-md-offset-1">学院：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
 <label class="select-inline">
-<input type="text" class="form-control" placeholder="XX省XX市">
+    <select class="form-control"  name="institude">
+    {% if usermsg.institude == '计算机学院' %}
+        <option selected="selected">计算机学院</option>
+    {% else %}
+        <option>计算机学院</option>
+    {% endif %}
+    {% if usermsg.institude == '理学院' %}
+        <option selected="selected">理学院</option>
+    {% else %}
+        <option>理学院</option>
+    {% endif %}
+    {% if usermsg.institude == '机电学院' %}
+        <option selected="selected">机电学院</option>
+    {% else %}
+        <option>机电学院</option>
+    {% endif %}
+    {% if usermsg.institude == '材料学院' %}
+        <option selected="selected">材料学院</option>
+    {% else %}
+        <option>材料学院</option>
+    {% endif %}
+     {% if usermsg.institude == '建筑学院' %}
+        <option selected="selected">建筑学院</option>
+    {% else %}
+        <option>建筑学院</option>
+    {% endif %}
+    {% if usermsg.institude == '人文学院' %}
+        <option selected="selected">人文学院</option>
+    {% else %}
+        <option>人文学院</option>
+    {% endif %}
+    {% if usermsg.institude == '基础学院' %}
+        <option selected="selected">基础学院</option>
+    {% else %}
+        <option>基础学院</option>
+    {% endif %}
+    </select>
 </label>
 
+<br><br>
 
-<br></br>
-
-<label class="inline   col-md-offset-1">居住地：&nbsp&nbsp&nbsp&nbsp</label>
-<label class="select-inline">
-<input type="text" class="form-control" placeholder="XX省XX市">
+<label class="inline  col-md-offset-1">联系方式：</label>
+    <label class="select-inline">
+    <input type="text" class="form-control" name="contactway" placeholder="{{usermsg.contactway}}">
 </label>
 
-<br></br>
+     <br><br>
 
-<label class="inline   col-md-offset-1">
-个人简介：&nbsp
-
-<textarea class="form-control-inline input-lg" rows="3" placeholder="请输入个人简介"></textarea>
-</label>
-
-<br></br>
-
-<p>
-<label class="inline">&nbsp&nbsp&nbsp&nbsp</label>
-<a href="#" class="btn btn-primary btn-lg     col-md-offset-2">保存</a>
-</p>
+    <button class="btn btn-primary btn-lg  col-md-offset-2">保存</button>
+</form>
 
       </div>
     </div>

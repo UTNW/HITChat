@@ -5,7 +5,7 @@
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/question.css') }}">
     <!-- 请确保CKEditor文件路径正确 -->
-    <script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ url_for('static', filename='ckeditorquestion/ckeditor.js') }}"></script>
 {% endblock %}
 
 {% block main %}
@@ -20,7 +20,7 @@
                 <form role="form">
                   <div class="form-group">
                     <label for="name">主题</label>
-                    <select class="form-control">
+                    <select class="form-control" name="label">
                       <option>通知</option>
                       <option>问答</option>
                       <option>二手</option>
