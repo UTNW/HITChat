@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户评论</title>
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/UserQuestion.css') }}">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style type="text/css">
+    .size {
+        width:190px;
+        height:180px;
+        margin-left:22%;
+        margin-bottom:10px;
+    }
+    .size1 {
+        margin-left:22%;
+    }
+</style>
+</head>
+<body>
+
+<ul class="nav nav-pills nav-stacked">
+    <li class="active" style="font-size:20px; font-family:'楷体'"><a ><span class="glyphicon glyphicon-align-justify"></span>个人中心</a></li>
+</ul>
+
+
+<div class="line">
+ <div class="col-sm-9 col-md-3">
+    <div class="thumbnail">
+      <div class="caption">
+
+<div class="list-group">
+    {% if picid == '0' %}
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="...图像加载失败" class="size"><br>
+    {% else %}
+        <img src="{{url_for('static', filename='images/userimage/'+ usermsg.telephone + picid +'.png')}}" alt="...图像加载失败" class="size"><br>
+    {% endif %}
+    <label class="size1" style="font-size:16px; font-family:'楷体'">用户名：{{usermsg.username}}</label><br>
+    <label class="size1" style="font-size:16px; font-family:'楷体'">座右铭：{{usermsg.motto}}</label><br><br>
+
+    <!--<a href="BasicMessage.html" class="list-group-item active">基本资料</a>-->
+    <!--<a href="Education.html" class="list-group-item">教育背景</a>-->
+    <!--<a href="Work.html" class="list-group-item">工作信息</a>-->
+    <!--<a href="HeadPortrait.html" class="list-group-item">头像设置</a>-->
+<ul class="nav nav-pills nav-stacked">
+    <a href="{{ url_for('showbasicmessage', msgid=usermsg.id) }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>基本资料</a>
+    <a href="{{ url_for('showpersonalitymessage', msgid=usermsg.id) }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>个性资料</a>
+    <a href="{{ url_for('userquestion', msgid=usermsg.id) }}" class="list-group-item"><span class="glyphicon glyphicon-send active"></span>发表的帖子</a>
+    <a href="{{ url_for('useranswer', msgid=usermsg.id) }}" class="list-group-item active"><span class="glyphicon glyphicon-send"></span>发表的评论</a>
+</ul>
+<br><br><br>
+    {% if currentid == usermsg.id %}
+        <ul class="nav nav-pills nav-stacked">
+            <a href="{{ url_for('basicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑资料</a>
+        </ul>
+    {% endif %}
+
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="line">
+ <div class="col-sm-9 col-md-7">
+    <div class="thumbnail">
+      <div class="caption">
+
+ <div class="list-group" style="height: 600px;overflow: auto">
+
+ <ul class="nav nav-pills nav-stacked">
+ <li ><label class="list-group-item" style="position: absolute;width: 960px"><span class="glyphicon glyphicon-send"></span>发表的评论</label></li>
+ </ul>
+
+    <ul class="question-list-group" style="margin-top: 30px">
+       {% for answer in useranswermsg %}
+           <li>
+               <div class="avatar-group">
+                   <img src="{{ url_for('static',filename='images/logo.png') }}" alt="" class="avatar">
+               </div>
+               <div class="question-group">
+                    <p class="answer-content">{{ answer.content|safe }}</p>
+                   <div class="question-info">
+                       <span class="question-author">作者：{{ answer.author.username }}</span>
+                       <span class="question-time">时间：{{ answer.create_time }}</span>
+
+                   </div>
+               </div>
+                {% if currentid == usermsg.id %}
+                    <a href="{{url_for('deleteanswer', answer_id=answer.id)}}" class="btn btn-primary col-md-offset-3">X</a>
+                {% endif %}
+           </li>
+       {% endfor %}
+   </ul>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

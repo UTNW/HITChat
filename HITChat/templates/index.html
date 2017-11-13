@@ -3,7 +3,9 @@
 {% block title %}首页{% endblock %}
 
 {% block head %}
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/clockstyle.css') }}">
     <style>
         <!--
             #pages { color:#666 }
@@ -13,24 +15,64 @@
             #pages strong { color:#FF0000; padding:0 3px; font-weight:bold }
             li{ list-style-type:none; color:#333333; line-height:30px;}
         -->
+        .size2 {
+            width:50px;
+            height:50px;
+        }
     </style>
 {% endblock %}
+{% block top %}
+    <div class="avatar-group">
+        <img src="{{ url_for('static',filename='images/logo.png') }}"
+             alt="" class="avatar">
+
+    </div>
+    <div class="question-group">
+        <p class="question-title1"><span style="color: red;font-family: '宋体';font-size: large;">【系统消息】</span>&nbsp;欢迎您来到HITChat！如果遇到什么问题请您及时反馈给我们，我们将不胜感激！同时请您点击<a href="https://www.wjx.top/jq/17959538.aspx" target="_blank">这里</a>对我们的网站做出评价，谢谢！！！</p>
+    </div>
+{% endblock %}
+{% block left %}
+    <div class="avatar-group1">
+     <a href="http://jwc.hit.edu.cn/" target="_blank"><img src="{{ url_for('static',filename='images/ico1.png') }}"
+             alt="" class="avatar" title="教务处"></a>
+     <a href="http://mail.hit.edu.cn/" target="_blank"><img src="{{ url_for('static',filename='images/ico2.png') }}"
+             alt="" class="avatar" title="电邮系统"></a>
+    <a href="http://www.lib.hit.edu.cn/" target="_blank"><img src="{{ url_for('static',filename='images/ico3.png') }}"
+             alt="" class="avatar" title="图书馆"></a>
+    <a href="http://map.hit.edu.cn/" target="_blank"><img src="{{ url_for('static',filename='images/ico4.png') }}"
+             alt="" class="avatar" title="校园地图"></a>
+    <a href="http://news.hit.edu.cn/" target="_blank"><img src="{{ url_for('static',filename='images/ico5.png') }}"
+             alt="" class="avatar" title="新闻网"></a>
+    <a href="http://xg.hit.edu.cn/" target="_blank"><img src="{{ url_for('static',filename='images/ico6.png') }}"
+             alt="" class="avatar" title="学工处"></a>
+    <a href="http://cms.hit.edu.cn/" target="_blank"><img src="{{ url_for('static',filename='images/ico7.png') }}"
+             alt="" class="avatar" title="乐学网"></a>
+    <a href="http://today.hit.edu.cn/" target="_blank"><img src="{{ url_for('static',filename='images/ico8.png') }}"
+             alt="" class="avatar" title="今日哈工大"></a>
+    <a href="https://vpn.hit.edu.cn/" target="_blank"><img src="{{ url_for('static',filename='images/ico9.png') }}"
+             alt="" class="avatar" title="哈工大VPN"></a>
+    </div>
+{% endblock %}
 {% block main %}
+
     <ul class="question-list-group" id="pageContent">
        {% for question in questions %}
            <li>
                <div class="avatar-group">
-                   <img src="{{ url_for('static',filename='images/logo.png') }}"
-                   alt="" class="avatar">
+                    {% if question.author.picid == 0 %}
+                        <img src="{{ url_for('static',filename='images/logo.png') }}" alt="...图像加载失败" class="avatar">
+                    {% else %}
+                        <img src="{{url_for('static', filename='images/userimage/'+ question.author.telephone + picids[question.id] + '.png')}}" alt="...图像加载失败" class="picsize1" style="width:50px;height:50px"><br>
+                    {% endif %}
                </div>
                <div class="question-group">
-                   <p class="question-title"><a href="{{ url_for('detail',question_id=question.id) }}">{{ question.title }}</a></p>
+                   <p class="question-title"><a href="{{ url_for('detail',question_id=question.id) }}">&nbsp;&nbsp;{{ question.title }}</a></p>
 {#                   <p class="question-content">{{ question.content }}</p>#}
                    <div class="question-info">
                        &nbsp;&nbsp;
                        <span class="glyphicon glyphicon-eye-open">&nbsp;<span id="{{ question.id }}"></span></span>&nbsp;&nbsp;
                        <span class="glyphicon glyphicon-thumbs-up"> &nbsp;</span>
-                       <span class="question-author">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.author.username }}</span>
+                       <a href="{{url_for('showbasicmessage', msgid=question.author.id)}}" target="_blank" ><span class="question-author">{{ question.author.username }}</span></a>
                        <span class="question-time">{{ question.create_time }}</span>
                    </div>
                </div>
@@ -188,4 +230,29 @@
         }
         hide();
     </script>
+{% endblock %}
+{% block right %}
+    <div class="avatar-group">
+{#        <img src="{{ url_for('static',filename='images/logo.png') }}"#}
+{#             alt="" class="avatar">#}
+    		<div id="clock" class="light">
+			<div class="display">
+				<div class="weekdays"></div>
+				<div class="ampm"></div>
+				<div class="alarm"></div>
+				<div class="digits"></div>
+			</div>
+		</div>
+
+		<div class="button-holder">
+			<a id="switch-theme" class="button">Switch Theme</a>
+{#			<a class="alarm-button"></a>#}
+		</div>
+		</div>
+		<!-- JavaScript Includes -->
+		<script src="{{ url_for('static',filename='JS/jquery-1.11.0.min.js') }}"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+		<script src="{{ url_for('static',filename='JS/script.js') }}"></script>
+
+    </div>
 {% endblock %}

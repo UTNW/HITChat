@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PersonalityMessage</title>
+    <title>个性信息</title>
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <style type="text/css">
     .size {
-        width:180px;
-        height:120px;
+        width:190px;
+        height:180px;
         margin-left:22%;
         margin-bottom:10px;
     }
@@ -29,8 +30,12 @@
     <div class="thumbnail">
       <div class="caption">
 
-<div class="list-group">
-    <img src="{{ url_for('static', filename='images/'+ usermsg.telephone +'.png') }}" alt="...图像加载失败" class="size"><br>
+<div class="list-group"> <!-- 初步想法：user中加入picnum 每次更改头像自加1 -->
+    {% if picid == '0' %}
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="...图像加载失败" class="size"><br>
+    {% else %}
+        <img src="{{url_for('static', filename='images/userimage/'+ usermsg.telephone + picid +'.png')}}" alt="...图像加载失败" class="size"><br>
+    {% endif %}
     <label class="size1" style="font-size:16px; font-family:'楷体'">用户名：{{usermsg.username}}</label><br>
     <label class="size1" style="font-size:16px; font-family:'楷体'">座右铭：{{usermsg.motto}}</label><br><br>
 
@@ -45,7 +50,7 @@
 </ul>
     <br><br><br>
 <ul class="nav nav-pills nav-stacked">
-    <a href="{{ url_for('showbasicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>返回个人中心</a>
+    <a href="{{ url_for('showbasicmessage', msgid=usermsg.id) }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>返回个人中心</a>
 </ul>
 <br><br><br>
 
@@ -65,11 +70,11 @@
  <div class="list-group">
 
  <ul class="nav nav-pills nav-stacked">
- <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑个性资料</a></li>
+ <li ><label class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑个性资料</label></li>
  </ul>
 
     <br><br>
-<form action="{{url_for('showpersonalitymessage')}}" method="POST">
+<form action="{{url_for('showpersonalitymessage', msgid=usermsg.id)}}" method="POST">
 
 <label class="inline   col-md-offset-1">座右铭：&nbsp&nbsp&nbsp&nbsp</label>
     <label class="select-inline">
@@ -102,15 +107,14 @@
 <label class="inline  col-md-offset-1">教育程度：</label>
 <label class="select-inline">
 <select class="form-control" name="education">
-  <option>未知</option>
-  <option>初中</option>
-  <option>高中</option>
-  <option>本科在读</option>
-  <option>本科</option>
-  <option>硕士</option>
-  <option>博士</option>
-  <option>中专/技校</option>
-  <option>其他</option>
+    {% if usermsg.education == '未知' %}<option selected="selected">未知</option>{% else %}<option>未知</option>{% endif %}
+    {% if usermsg.education == '小学' %}<option selected="selected">小学</option>{% else %}<option>小学</option>{% endif %}
+    {% if usermsg.education == '初中' %}<option selected="selected">初中</option>{% else %}<option>初中</option>{% endif %}
+    {% if usermsg.education == '高中' %}<option selected="selected">高中</option>{% else %}<option>高中</option>{% endif %}
+    {% if usermsg.education == '专科' %}<option selected="selected">专科</option>{% else %}<option>专科</option>{% endif %}
+    {% if usermsg.education == '本科在读' %}<option selected="selected">本科在读</option>{% else %}<option>本科在读</option>{% endif %}
+    {% if usermsg.education == '硕士' %}<option selected="selected">硕士</option>{% else %}<option>硕士</option>{% endif %}
+    {% if usermsg.education == '博士' %}<option selected="selected">博士</option>{% else %}<option>博士</option>{% endif %}
 </select>
 </label>
 

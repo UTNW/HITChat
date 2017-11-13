@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BasicMessage</title>
+    <title>基本资料</title>
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <style type="text/css">
     .size {
-        width:180px;
-        height:120px;
+        width:190px;
+        height:180px;
         margin-left:22%;
         margin-bottom:10px;
     }
@@ -30,7 +31,11 @@
       <div class="caption">
 
 <div class="list-group">
-    <img src="{{ url_for('static', filename='images/'+ usermsg.telephone +'.png') }}" alt="...图像加载失败" class="size"><br>
+    {% if picid == '0' %}
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="...图像加载失败" class="size"><br>
+    {% else %}
+        <img src="{{url_for('static', filename='images/userimage/'+ usermsg.telephone + picid +'.png')}}" alt="...图像加载失败" class="size"><br>
+    {% endif %}
     <label class="size1" style="font-size:16px; font-family:'楷体'">用户名：{{usermsg.username}}</label><br>
     <label class="size1" style="font-size:16px; font-family:'楷体'">座右铭：{{usermsg.motto}}</label><br><br>
 
@@ -45,7 +50,7 @@
 </ul>
     <br><br><br>
 <ul class="nav nav-pills nav-stacked">
-    <a href="{{ url_for('showbasicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>返回个人中心</a>
+    <a href="{{ url_for('showbasicmessage', msgid=usermsg.id) }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>返回个人中心</a>
 </ul>
     <br><br><br>
 
@@ -65,11 +70,11 @@
  <div class="list-group">
 
  <ul class="nav nav-pills nav-stacked">
- <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑基本资料</a></li>
+ <li ><label class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑基本资料</label></li>
  </ul>
 
  <br><br>
-<form action="{{ url_for('showbasicmessage')}}" method="POST">
+<form action="{{ url_for('showbasicmessage', msgid=usermsg.id)}}" method="POST">
 
 <label class="inline   col-md-offset-1">用户名：&nbsp&nbsp&nbsp&nbsp</label>
     <label class="select-inline">
@@ -85,13 +90,13 @@
 
 <br><br>
 
-<label class="col-md-offset-1">性别：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+<label class="col-md-offset-1">性别：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
 
-<label class="radio-inline">
-    <input type="radio" value="男" name="gender" placeholder="{{usermsg.gender}}"> 男
-</label>
-<label class="radio-inline col-md-offset-2">
-    <input type="radio" value="女" name="gender" placeholder="{{usermsg.gender}}"> 女
+<label class="select-inline">
+<select class="form-control" name="gender">
+    {% if usermsg.gender == '男' %}<option selected="selected">男</option>{% else %}<option>男</option>{% endif %}
+    {% if usermsg.gender == '女' %}<option selected="selected">女</option>{% else %}<option>女</option>{% endif %}
+</select>
 </label>
 
  <br><br>
@@ -100,48 +105,71 @@
 
 <label class="select-inline">
 <select class="form-control" name="birthyear">
-  <option>1996年</option>
-  <option>1997年</option>
-  <option>1998年</option>
-  <option>1999年</option>
-  <option>2000年</option>
-  <option>2001年</option>
-  <option>2002年</option>
-  <option>2003年</option>
-  <option>2004年</option>
-  <option>2005年</option>
-  <option>2006年</option>
-  <option>2007年</option>
-  <option>2008年</option>
-  <option>2009年</option>
-  <option>2010年</option>
+    {% if usermsg.birthyear == '1990年' %}<option selected="selected">1990年</option>{% else %}<option>1990年</option>{% endif %}
+    {% if usermsg.birthyear == '1991年' %}<option selected="selected">1991年</option>{% else %}<option>1991年</option>{% endif %}
+    {% if usermsg.birthyear == '1992年' %}<option selected="selected">1992年</option>{% else %}<option>1992年</option>{% endif %}
+    {% if usermsg.birthyear == '1993年' %}<option selected="selected">1993年</option>{% else %}<option>1993年</option>{% endif %}
+    {% if usermsg.birthyear == '1994年' %}<option selected="selected">1994年</option>{% else %}<option>1994年</option>{% endif %}
+    {% if usermsg.birthyear == '1995年' %}<option selected="selected">1995年</option>{% else %}<option>1995年</option>{% endif %}
+    {% if usermsg.birthyear == '1996年' %}<option selected="selected">1996年</option>{% else %}<option>1996年</option>{% endif %}
+    {% if usermsg.birthyear == '1997年' %}<option selected="selected">1997年</option>{% else %}<option>1997年</option>{% endif %}
+    {% if usermsg.birthyear == '1998年' %}<option selected="selected">1998年</option>{% else %}<option>1998年</option>{% endif %}
+    {% if usermsg.birthyear == '1999年' %}<option selected="selected">1999年</option>{% else %}<option>1999年</option>{% endif %}
+    {% if usermsg.birthyear == '2000年' %}<option selected="selected">2000年</option>{% else %}<option>2000年</option>{% endif %}
+
 </select>
 </label>
 
 <label class="select-inline">
 <select class="form-control" name="birthmonth">
-  <option>1月</option>
-  <option>2月</option>
-  <option>3月</option>
-  <option>4月</option>
-  <option>5月</option>
-  <option>6月</option>
-  <option>7月</option>
-  <option>8月</option>
-  <option>9月</option>
-  <option>10月</option>
-  <option>11月</option>
-  <option>12月</option>
+    {% if usermsg.birthmonth == '1月' %}<option selected="selected">1月</option>{% else %}<option>1月</option>{% endif %}
+    {% if usermsg.birthmonth == '2月' %}<option selected="selected">2月</option>{% else %}<option>2月</option>{% endif %}
+    {% if usermsg.birthmonth == '3月' %}<option selected="selected">3月</option>{% else %}<option>3月</option>{% endif %}
+    {% if usermsg.birthmonth == '4月' %}<option selected="selected">4月</option>{% else %}<option>4月</option>{% endif %}
+    {% if usermsg.birthmonth == '5月' %}<option selected="selected">5月</option>{% else %}<option>5月</option>{% endif %}
+    {% if usermsg.birthmonth == '6月' %}<option selected="selected">6月</option>{% else %}<option>6月</option>{% endif %}
+    {% if usermsg.birthmonth == '7月' %}<option selected="selected">7月</option>{% else %}<option>7月</option>{% endif %}
+    {% if usermsg.birthmonth == '8月' %}<option selected="selected">8月</option>{% else %}<option>8月</option>{% endif %}
+    {% if usermsg.birthmonth == '9月' %}<option selected="selected">9月</option>{% else %}<option>9月</option>{% endif %}
+    {% if usermsg.birthmonth == '10月' %}<option selected="selected">10月</option>{% else %}<option>10月</option>{% endif %}
+    {% if usermsg.birthmonth == '11月' %}<option selected="selected">11月</option>{% else %}<option>11月</option>{% endif %}
+    {% if usermsg.birthmonth == '12月' %}<option selected="selected">12月</option>{% else %}<option>12月</option>{% endif %}
 </select>
 </label>
 
 <label class="select-inline">
 <select class="form-control" name="birthday">
-    <option>1日</option><option>2日</option><option>3日</option><option>4日</option><option>5日</option><option>6日</option>
-    <option>7日</option><option>8日</option><option>9日</option><option>10日</option><option>11日</option><option>12日</option>
-    <option>13日</option><option>14日</option><option>15日</option><option>16日</option><option>17日</option><option>18日</option>
-    <option>19日</option><option>20日</option><option>21日</option><option>22日</option><option>23日</option><option>24日</option>
-    <option>25日</option><option>26日</option><option>27日</option><option>28日</option><option>29日</option><option>30日</option><option>31日</option>
+    {% if usermsg.birthday == '1日' %}<option selected="selected">1日</option>{% else %}<option>1日</option>{% endif %}
+    {% if usermsg.birthday == '2日' %}<option selected="selected">2日</option>{% else %}<option>2日</option>{% endif %}
+    {% if usermsg.birthday == '3日' %}<option selected="selected">3日</option>{% else %}<option>3日</option>{% endif %}
+    {% if usermsg.birthday == '4日' %}<option selected="selected">4日</option>{% else %}<option>4日</option>{% endif %}
+    {% if usermsg.birthday == '5日' %}<option selected="selected">5日</option>{% else %}<option>5日</option>{% endif %}
+    {% if usermsg.birthday == '6日' %}<option selected="selected">6日</option>{% else %}<option>6日</option>{% endif %}
+    {% if usermsg.birthday == '7日' %}<option selected="selected">7日</option>{% else %}<option>7日</option>{% endif %}
+    {% if usermsg.birthday == '8日' %}<option selected="selected">8日</option>{% else %}<option>8日</option>{% endif %}
+    {% if usermsg.birthday == '9日' %}<option selected="selected">9日</option>{% else %}<option>9日</option>{% endif %}
+    {% if usermsg.birthday == '10日' %}<option selected="selected">10日</option>{% else %}<option>10日</option>{% endif %}
+    {% if usermsg.birthday == '11日' %}<option selected="selected">11日</option>{% else %}<option>11日</option>{% endif %}
+    {% if usermsg.birthday == '12日' %}<option selected="selected">12日</option>{% else %}<option>12日</option>{% endif %}
+    {% if usermsg.birthday == '13日' %}<option selected="selected">13日</option>{% else %}<option>13日</option>{% endif %}
+    {% if usermsg.birthday == '14日' %}<option selected="selected">14日</option>{% else %}<option>14日</option>{% endif %}
+    {% if usermsg.birthday == '15日' %}<option selected="selected">15日</option>{% else %}<option>15日</option>{% endif %}
+    {% if usermsg.birthday == '16日' %}<option selected="selected">16日</option>{% else %}<option>16日</option>{% endif %}
+    {% if usermsg.birthday == '17日' %}<option selected="selected">17日</option>{% else %}<option>17日</option>{% endif %}
+    {% if usermsg.birthday == '18日' %}<option selected="selected">18日</option>{% else %}<option>18日</option>{% endif %}
+    {% if usermsg.birthday == '19日' %}<option selected="selected">19日</option>{% else %}<option>19日</option>{% endif %}
+    {% if usermsg.birthday == '20日' %}<option selected="selected">20日</option>{% else %}<option>20日</option>{% endif %}
+    {% if usermsg.birthday == '21日' %}<option selected="selected">21日</option>{% else %}<option>21日</option>{% endif %}
+    {% if usermsg.birthday == '22日' %}<option selected="selected">22日</option>{% else %}<option>22日</option>{% endif %}
+    {% if usermsg.birthday == '23日' %}<option selected="selected">23日</option>{% else %}<option>23日</option>{% endif %}
+    {% if usermsg.birthday == '24日' %}<option selected="selected">24日</option>{% else %}<option>24日</option>{% endif %}
+    {% if usermsg.birthday == '25日' %}<option selected="selected">25日</option>{% else %}<option>25日</option>{% endif %}
+    {% if usermsg.birthday == '26日' %}<option selected="selected">26日</option>{% else %}<option>26日</option>{% endif %}
+    {% if usermsg.birthday == '27日' %}<option selected="selected">27日</option>{% else %}<option>27日</option>{% endif %}
+    {% if usermsg.birthday == '28日' %}<option selected="selected">28日</option>{% else %}<option>28日</option>{% endif %}
+    {% if usermsg.birthday == '29日' %}<option selected="selected">29日</option>{% else %}<option>29日</option>{% endif %}
+    {% if usermsg.birthday == '30日' %}<option selected="selected">30日</option>{% else %}<option>30日</option>{% endif %}
+    {% if usermsg.birthday == '31日' %}<option selected="selected">31日</option>{% else %}<option>31日</option>{% endif %}
 
 </select>
 </label>
@@ -151,42 +179,15 @@
 
 <label class="inline  col-md-offset-1">学院：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
 <label class="select-inline">
-    <select class="form-control"  name="institude">
-    {% if usermsg.institude == '计算机学院' %}
-        <option selected="selected">计算机学院</option>
-    {% else %}
-        <option>计算机学院</option>
-    {% endif %}
-    {% if usermsg.institude == '理学院' %}
-        <option selected="selected">理学院</option>
-    {% else %}
-        <option>理学院</option>
-    {% endif %}
-    {% if usermsg.institude == '机电学院' %}
-        <option selected="selected">机电学院</option>
-    {% else %}
-        <option>机电学院</option>
-    {% endif %}
-    {% if usermsg.institude == '材料学院' %}
-        <option selected="selected">材料学院</option>
-    {% else %}
-        <option>材料学院</option>
-    {% endif %}
-     {% if usermsg.institude == '建筑学院' %}
-        <option selected="selected">建筑学院</option>
-    {% else %}
-        <option>建筑学院</option>
-    {% endif %}
-    {% if usermsg.institude == '人文学院' %}
-        <option selected="selected">人文学院</option>
-    {% else %}
-        <option>人文学院</option>
-    {% endif %}
-    {% if usermsg.institude == '基础学院' %}
-        <option selected="selected">基础学院</option>
-    {% else %}
-        <option>基础学院</option>
-    {% endif %}
+
+    <select class="form-control"  name="institute">
+    {% if usermsg.institude == '计算机学院' %}<option selected="selected">计算机学院</option>{% else %}<option>计算机学院</option>{% endif %}
+    {% if usermsg.institude == '理学院' %}<option selected="selected">理学院</option>{% else %}<option>理学院</option>{% endif %}
+    {% if usermsg.institude == '机电学院' %}<option selected="selected">机电学院</option>{% else %}<option>机电学院</option>{% endif %}
+    {% if usermsg.institude == '材料学院' %}<option selected="selected">材料学院</option>{% else %}<option>材料学院</option>{% endif %}
+    {% if usermsg.institude == '建筑学院' %}<option selected="selected">建筑学院</option>{% else %}<option>建筑学院</option>{% endif %}
+    {% if usermsg.institude == '人文学院' %}<option selected="selected">人文学院</option>{% else %}<option>人文学院</option>{% endif %}
+    {% if usermsg.institude == '基础学院' %}<option selected="selected">基础学院</option>{% else %}<option>基础学院</option>{% endif %}
     </select>
 </label>
 

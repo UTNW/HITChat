@@ -15,6 +15,8 @@ import json
 import random
 import urllib
 import datetime
+from mysqlconnector import mysql
+sql = mysql()  # 连接爬虫数据库，并初始化游标
 app = Flask(__name__)
 app.config.from_object(config)
 db.init_app(app)
@@ -22,12 +24,19 @@ global kernel
 kernel = aiml.Kernel()
 flag = True
 
-@app.route('/test')
-def test():
-    context = {
-        'questions': Question.query.order_by(db.desc(Question.create_time)).all()
-    }
-    return render_template('Work.html',**context)
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'),404
+
+@app.route('/contactAdmin/')
+def contactAdmin():
+    return render_template('contactadmin.html')
+
+@app.route('/news/')
+@login_required
+def news():
+    dataSql = sql.select('slideRight1')
+    return render_template('news.html',dataSql=dataSql,usermsg=g.user, picid=str(g.user.picid))
 
 @app.route('/')
 @login_required
@@ -35,33 +44,44 @@ def index():
     context = {
         'questions': Question.query.order_by(db.desc(Question.create_time)).all()
     }
-    return render_template('index.html',**context)
+    allq = Question.query.order_by(db.desc(Question.create_time)).all()
+    picids = {}
+    for q in allq:
+        picids[q.id] = str(q.author.picid)
+    return render_template('index.html', usermsg=g.user, picid=str(g.user.picid), picids=picids, **context)
 
+@app.route('/classify')
+@login_required
+def classify():
+    context = {
+        'questions': Question.query.order_by(db.desc(Question.create_time)).all()
+    }
+    return render_template('classify.html',**context)
 ###################################################################
 #修改基本信息
 @app.route('/basicmessage/')
 def basicmessage():
-    return render_template('BasicMessage.html', usermsg=g.user)
+    return render_template('BasicMessage.html', usermsg=g.user, picid=str(g.user.picid))
 
 #修改个性信息
 @app.route('/personalitymessage/')
 def personalitymessage():
-    return render_template('PersonalityMessage.html', usermsg=g.user)
+    return render_template('PersonalityMessage.html', usermsg=g.user, picid=str(g.user.picid))
 
 #展示基本信息
-@app.route('/showbasicmessage/',methods=['POST', 'GET'])
-def showbasicmessage():
+@app.route('/showbasicmessage/<msgid>', methods=['POST', 'GET'])
+def showbasicmessage(msgid):
     username = request.form.get('username')
     realname = request.form.get('realname')
     gender = request.form.get('gender')
-    institude = request.form.get('institude')
+    institute = request.form.get('institute')
     contactway = request.form.get('contactway')
     birthyear = request.form.get('birthyear')
     birthmonth = request.form.get('birthmonth')
     birthday = request.form.get('birthday')
 
-    # 得到当前用户的User表
-    usermsg = g.user
+    # 得到目标用户的User表
+    usermsg = User.query.filter(User.id == msgid).first()
     if username:
         usermsg.username = username
     if realname:
@@ -76,17 +96,18 @@ def showbasicmessage():
         usermsg.birthmonth = birthmonth
     if birthday:
         usermsg.birthday = birthday
-    if institude:
-        usermsg.institude = institude
+    if institute:
+        usermsg.institude = institute
 
     db.session.add(usermsg)
     db.session.commit()
+    usermsg = User.query.filter(User.id == msgid).first()
 
-    return render_template('ShowBasic.html', usermsg=g.user)
+    return render_template('ShowBasic.html', usermsg=usermsg, picid=str(usermsg.picid), currentid=g.user.id)
 
 #展示个性信息
-@app.route('/showpersonalitymessage/', methods=['POST', 'GET'])
-def showpersonalitymessage():
+@app.route('/showpersonalitymessage/<msgid>', methods=['POST', 'GET'])
+def showpersonalitymessage(msgid):
     motto = request.form.get('motto')
     hobby = request.form.get('hobby')
     birthplace = request.form.get('birthplace')
@@ -94,7 +115,7 @@ def showpersonalitymessage():
     education = request.form.get('education')
     resume = request.form.get('resume')
 
-    usermsg = g.user
+    usermsg = User.query.filter(User.id == msgid).first()
     if motto:
         usermsg.motto = motto
     if hobby:
@@ -110,13 +131,14 @@ def showpersonalitymessage():
 
     db.session.add(usermsg)
     db.session.commit()
+    usermsg = User.query.filter(User.id == msgid).first()
 
-    return render_template('ShowPersonality.html', usermsg=g.user)
+    return render_template('ShowPersonality.html', usermsg=usermsg, picid=str(usermsg.picid), currentid=g.user.id)
 
 #头像设置
 @app.route('/headportreait/')
 def headportrait():
-    return render_template('HeadPortrait.html', usermsg=g.user)
+    return render_template('HeadPortrait.html', usermsg=g.user, picid=str(g.user.picid))
 
 #上传图片
 @app.route('/uploadpic/', methods=['GET', 'POST'])
@@ -124,15 +146,52 @@ def uploadpic():
     if request.method == 'POST':
         file = request.files['picture']
         if file:
-            file.save(os.path.join(os.getcwd(), 'static/images/' + str(g.user.telephone) + '.png'))
-            return redirect(url_for('showbasicmessage'))
+            picway = '/home/ubuntu/HITChat/static/images/userimage/' + str(g.user.telephone) + str(g.user.picid) + '.png'
+            if os.path.exists(picway):
+                os.remove(picway)
+            usermsg = g.user
+            usermsg.picid = usermsg.picid + 1
+            db.session.add(usermsg)
+            db.session.commit()
+            file.save(os.path.join('/home/ubuntu/HITChat', 'static/images/userimage/' + str(g.user.telephone) + str(g.user.picid) + '.png'))
+            return redirect(url_for('showbasicmessage', msgid=g.user.id))
 
-#展示用户所有帖子
-@app.route('/userquestion/')
-def userquestion():
-    userquestionmsg = Question.query.filter(Question.author_id == g.user.id)
-    return render_template('UserQuestion.html', userquestionmsg=userquestionmsg, usermsg=g.user)
+#展示用户所有文章
+@app.route('/userquestion/<msgid>')
+def userquestion(msgid):
+    if g.user.isAdmin == 1:
+        userquestionmsg = Question.query.filter()
+    else:
+        userquestionmsg = Question.query.filter(Question.author_id == msgid)
+    usermsg = User.query.filter(User.id == msgid).first()
+    return render_template('UserQuestion.html', userquestionmsg=userquestionmsg, usermsg=usermsg, picid=str(usermsg.picid), currentid=g.user.id)
 
+#删除文章
+@app.route('/deletequestion/<question_id>')
+def deletequestion(question_id):
+    print question_id
+    question = Question.query.filter(Question.id == question_id).first()
+    db.session.delete(question)
+    db.session.commit()
+    return redirect(url_for('userquestion',msgid=g.user.id))
+
+#展示用户所有评论
+@app.route('/useranswer/<msgid>')
+def useranswer(msgid):
+    if g.user.isAdmin == 1:
+        useranswermsg = Answer.query.filter()
+    else:
+        useranswermsg = Answer.query.filter(Answer.author_id == msgid)
+    usermsg = User.query.filter(User.id == msgid).first()
+    return render_template('UserAnswer.html', useranswermsg=useranswermsg, usermsg=usermsg, picid=str(usermsg.picid), currentid=g.user.id)
+
+#删除评论
+@app.route('/deleteanswer/<answer_id>')
+def deleteanswer(answer_id):
+    answer = Answer.query.filter(Answer.id == answer_id).first()
+    db.session.delete(answer)
+    db.session.commit()
+    return redirect(url_for('useranswer', msgid=g.user.id))
 #####################################################################
 
 @app.route('/login/',methods=['GET','POST'])
@@ -191,11 +250,14 @@ def logout():
 @login_required
 def question():
     if request.method == 'GET':
-        return render_template('question.html')
+        return render_template('question.html', usermsg=g.user, picid=str(g.user.picid))
     else:
         title = request.form.get('title')
         label = request.form.get('label')
         content = request.form.get('content')
+        T = title
+        if T.strip() == "":
+            title = label
         # for i in content:
         #     print i
         # Listcontent = list(content)
@@ -233,7 +295,7 @@ def aiml_detail():
         flag = False
     #####################################################################
     yxaiml = YX_Aiml.query.filter(YX_Aiml.id > 0)
-    return render_template('YX_aiml.html',yx_aiml=yxaiml)
+    return render_template('YX_aiml.html',yx_aiml=yxaiml, usermsg=g.user, picid=str(g.user.picid))
 
 @app.route('/YX_aiml/',methods=['POST'])
 def YX_aiml():
@@ -263,7 +325,15 @@ def YX_aiml():
 def detail(question_id):
     question_model = Question.query.filter(Question.id == question_id).first()
     answer = Answer.query.filter(Answer.question_id == question_id).first()
-    return render_template('detail.html',question=question_model,answer=answer)
+    allanswerpicid = {}
+    for a in question_model.answers:
+        allanswerpicid[a.id] = str(a.author.picid)
+    return render_template('detail.html',question=question_model, answer=answer, usermsg=g.user, picid=str(g.user.picid), allanswerpicid=allanswerpicid)
+
+@app.route('/newsdetail/<news_leftid>/<news_id>')
+def newsdetail(news_leftid,news_id):
+    dataSql = sql.selectnews('slideRightDetail'+str(news_leftid),news_id)
+    return render_template('newsdetail.html',dataSql = dataSql,usermsg = g.user,picid=str(g.user.picid))
 
 @app.route('/add_answer/',methods=['POST'])
 @login_required
@@ -305,11 +375,15 @@ def add_zan():
     return redirect(url_for('detail',question_id=question_id))
 
 @app.route('/search/')
+@login_required
 def search():
     q = request.args.get('q')
     questions=Question.query.filter(or_(Question.title.contains(q),
                               Question.content.contains(q))).order_by(db.desc(Question.create_time))
-    return render_template('index.html',questions=questions)
+    picids = {}
+    for q in questions:
+        picids[q.id] = str(q.author.picid)
+    return render_template('index.html',questions=questions,usermsg=g.user,picids=picids,picid=str(g.user.picid))
 
 def gen_rnd_filename():
     filename_prefix = datetime.datetime.now().strftime('%Y%m%d%H%M%S')

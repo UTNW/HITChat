@@ -3,6 +3,7 @@
 {% block title %}登录{% endblock %}
 
 {% block head%}
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/login_register.css') }}">
 {% endblock %}
 
@@ -25,6 +26,7 @@
             <div class="form-group">
                 <button class="btn btn-primary btn-block">登录</button>
             </div>
+            <a href="{{ url_for('contactAdmin') }}">登录遇到问题？联系管理员</a>
         </div>
     </form>
 {% endblock %}

@@ -18,19 +18,21 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
     salt = db.Column(db.String(50), nullable=False)
 
-    realname = db.Column(db.String(50), nullable=True)
-    gender = db.Column(db.String(6), nullable=True)
-    birthyear = db.Column(db.String(6), nullable=True)
-    birthmonth = db.Column(db.String(6), nullable=True)
-    birthday = db.Column(db.String(6), nullable=True)
-    institude = db.Column(db.String(50), nullable=True)
-    contactway = db.Column(db.String(50), nullable=True)
-    motto = db.Column(db.String(100), nullable=True)
-    hobby = db.Column(db.String(100), nullable=True)
-    birthplace = db.Column(db.String(100), nullable=True)
-    liveplace = db.Column(db.String(100), nullable=True)
-    education = db.Column(db.String(20), nullable=True)
-    resume = db.Column(db.String(100), nullable=True)
+    realname = db.Column(db.String(50), nullable=True,default='未知')
+    gender = db.Column(db.String(6), nullable=True,default='未知')
+    birthyear = db.Column(db.String(6), nullable=True,default='未知')
+    birthmonth = db.Column(db.String(6), nullable=True,default='未知')
+    birthday = db.Column(db.String(6), nullable=True,default='未知')
+    institude = db.Column(db.String(50), nullable=True,default='未知')
+    contactway = db.Column(db.String(50), nullable=True,default='未知')
+    motto = db.Column(db.String(100), nullable=True,default='未知')
+    hobby = db.Column(db.String(100), nullable=True,default='未知')
+    birthplace = db.Column(db.String(100), nullable=True,default='未知')
+    liveplace = db.Column(db.String(100), nullable=True,default='未知')
+    education = db.Column(db.String(20), nullable=True,default='未知')
+    resume = db.Column(db.String(100), nullable=True,default='未知')
+    picid = db.Column(db.Integer, default=0)
+    isAdmin = db.Column(db.Integer, default=0)
 
 class Question(db.Model):
     __tablename__='question'
@@ -71,4 +73,10 @@ class YX_Aiml(db.Model):
     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
     content_p = db.Column(db.Text,nullable=True)
     content_r = db.Column(db.Text, nullable=True)
+
+class Top(db.Model):
+    __tablename__='top'
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    content = db.Column(db.Text,nullable=True)
+    create_time = db.Column(db.DateTime, default=datetime.now)
 

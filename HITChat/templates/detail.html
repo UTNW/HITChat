@@ -1,8 +1,9 @@
-{% extends 'base_index.html' %}
+{% extends 'base_detail.html' %}
 
 {% block title %}详情-{% endblock %}
 
 {% block head %}
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/detail.css') }}">
     <!-- 请确保CKEditor文件路径正确 -->
     <script src="{{ url_for('static', filename='ckeditoranswer/ckeditor.js') }}"></script>
@@ -13,14 +14,14 @@
 {% block main %}
     <h3 class="page-title">{{ question.title }}</h3>
     <p class="question-info">
-        <span>作者：{{ question.author.username }}</span>
+        <span>作者：<a href="{{url_for('showbasicmessage', msgid=question.author.id )}}" target="_blank"><span>{{ question.author.username }}</span></a></span>
         <span>&nbsp;&nbsp;&nbsp;&nbsp;时间：{{ question.create_time }}</span>
         <span>&nbsp;&nbsp;&nbsp;&nbsp;阅读量：<label id={{ question.id }}> </label></span>
     </p>
     <hr>
     <p class="question-content">{{ question.content|safe }}</p>
     <hr>
-    <div class="praise">
+    <div class="praise" style="z-index:0">
         <span id="praise"><img src="{{ url_for('static',filename='images/zan.png') }}" id="praise-img" /></span>
         <span id="praise-txt">{{ question.zan }}</span>
         <span id="add-num"><em>+1</em></span>
@@ -51,10 +52,13 @@
           {% for answer in question.answers %}
               <li>
                   <div class="user-info">
-                      <img src="{{ url_for('static',filename='images/logo.png') }}"
-                           alt="" class="avatar">
-                      <span class="username">{{ answer.author.username }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                      <span class="create-time">{{ answer.create_time }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      {% if answer.author.picid == 0 %}
+                        <img src="{{ url_for('static',filename='images/logo.png') }}" alt="" class="avatar">
+                      {% else %}
+                        <img src="{{url_for('static', filename='images/userimage/'+ answer.author.telephone + allanswerpicid[answer.id] + '.png')}}" alt="...图像加载失败" class="picsize1" style="width:50px;height:50px;">
+                      {% endif %}
+                      <a href="{{url_for('showbasicmessage', msgid=answer.author.id )}}" target="_blank"><span class="username">{{ answer.author.username }}</span></a>
+                      <span class="create-time">&nbsp;&nbsp;{{ answer.create_time }}&nbsp;&nbsp;</span>
                       <span class="glyphicon glyphicon-thumbs-up"></span>
                   </div>
                   <p class="answer-content">{{ answer.content|safe }}</p>
@@ -289,8 +293,8 @@
                           <div class="user-info1">
                               <img src="{{ url_for('static',filename='images/logo.png') }}"
                                    alt="" class="avatar">
-                              <span class="username">{{ answer2.author.username }}&nbsp;&nbsp;回复&nbsp;&nbsp;{{ answer.author.username }}：&nbsp;</span>
-                              <span class="create-time">{{ answer2.create_time }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                              <span class="username"> <a href="{{url_for('showbasicmessage', msgid=answer2.author.id )}}" target="_blank"><span style="color: red">{{ answer2.author.username }}&nbsp;&nbsp;</span></a>回复&nbsp;&nbsp;<span style="color: red">{{ answer.author.username }}：&nbsp;</span></span>
+                              <span class="create-time">{{ answer2.create_time }}&nbsp;&nbsp;&nbsp;</span>
                               <span class="glyphicon glyphicon-thumbs-up"></span>
                           </div>
                           <p class="answer-content1">{{ answer2.content|safe }}</p>

@@ -4,13 +4,57 @@
 
 body{
     background: #f3f3f3;
+    /*width: 100%;*/
+    /*min-width: 100%;*/
+}
+.top{
+    background: rgba(255, 255, 255, 0.6);
+    width: 750px;
+    height: 90px;
+    /*margin-left: 140px;*/
+    overflow: auto;
+    padding: 10px;
+    float: left;
+    margin-top: 90px;
+    position: absolute;
+    z-index: -1;
+}
+.left{
+    background: rgba(255, 255, 255, 0.9);
+    width: 400px;
+    height:400px;
+    /*margin: 0 50px;*/
+    margin-left: 800px;
+    overflow: auto;
+    padding: 10px;
+    float: right;
+    margin-top: 320px;
+    position: absolute;
+    z-index: -1;
 }
 .main{
     background: rgba(255,255,255,0.9);
     width: 750px;
-    margin: 0 auto;
+    /*margin-left: 140px;*/
+    float: left;
     overflow: hidden;
     padding: 10px;
+    margin-top: 180px;
+    position: absolute;
+    z-index: -1;
+}
+.right{
+    background: rgba(255, 255, 255, 0.6);
+    width: 400px;
+    height:200px;
+    /*margin: 0 auto;*/
+    margin-left: 800px;
+    overflow: auto;
+    padding: 10px;
+    float: right;
+    margin-top: 70px;
+    position: absolute;
+    z-index: -1;
 }
 .page-title{
     text-align: center;

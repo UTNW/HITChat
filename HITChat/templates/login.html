@@ -3,6 +3,7 @@
 {% block title %}登录{% endblock %}
 
 {% block head%}
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/login_register.css') }}">
 {% endblock %}
 
@@ -19,8 +20,41 @@
             <div class="form-group">
                 <button class="btn btn-primary btn-block">登录</button>
             </div>
+            <a href="{{ url_for('contactAdmin') }}">登录遇到问题？联系管理员</a>
         </div>
     </form>
+
+{% endblock %}
+{% block click%}
+<div id="box" style="display: none">
+        <div id="pic">
+            <a href="https://www.wjx.top/jq/17959538.aspx" target="_blank"><img src="{{ url_for('static',filename='images/welcome.jpg') }}"
+             alt="" class="avatar" style="width:500px;height:300px"></a>
+            <a href="javascript:void(0);" id="closeBtn">&nbsp;&nbsp;x&nbsp;&nbsp;</a>
+        </div>
+</div>
+    <script>
+{#        function a(){#}
+{#            var tipBtn=document.getElementById("box");#}
+{#            var closeBtn=document.getElementById("closeBtn");#}
+{#            var tipBtn=document.getElementById("box");#}
+{#            closeBtn.onclick=function(){#}
+{#                tipBtn.className="hide";#}
+{#            }#}
+{#        }#}
+        window.onload=function(){
+            setTimeout(function(){
+            var tipBtn=document.getElementById("box");
+            tipBtn.style.display="block";
+            var closeBtn=document.getElementById("closeBtn");
+            var tipBtn=document.getElementById("box");
+            closeBtn.onclick=function(){
+                tipBtn.className="hide";
+            }
+        },2700);
+
+        }
+    </script>
 {% endblock %}
 {% block footer%}
     <div class="footer">

@@ -12,7 +12,7 @@ from flask_script import Manager
 from flask_migrate import Migrate,MigrateCommand
 from hitchat import app
 from exts import db
-from models import User,Question,Answer,YX_Aiml,Answer
+from models import User,Question,Answer,YX_Aiml,Answer2,Top
 
 manager = Manager(app)
 

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {#<meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+    <link href="{{ url_for('static',filename='css/bootstrap-responsive.css') }}" rel="stylesheet">
     <title>{% block title %}{% endblock %}-HITChat</title>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -15,8 +17,17 @@
     <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
 
     {% block head %}{% endblock %}
+    <style>
+        .picsize{
+            width:50px;
+            height:36px;
+        }
+    </style>
 </head>
 <body>
+	<div class="whole">
+            <img src="{{ url_for('static',filename='images/hit1.jpg') }}" />
+	</div>
     <nav class="navbar navbar-default">
           <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -27,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" style="padding:0 0 0 15px;" href="#">
+              <a class="navbar-brand" style="padding:0 0 0 15px;" href="http://www.hit.edu.cn/" target="_blank">
                   <img src="{{ url_for('static',filename='images/logo.png') }}" alt="" style="max-width:130px;">
               </a>
             </div>
@@ -36,7 +47,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ url_for('index') }}">首页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="{{ url_for('classify') }}">分类</a></li>
                 <li><a href="{{ url_for('question') }}">发布问答</a></li>
+                <li><a href="{{ url_for('news') }}">新闻速览</a></li>
+                <li><a href="http://211.159.187.82:3000/" target="_blank">HITChat</a></li>
                 <li><a href="{{ url_for('aiml_detail') }}">聪明的一休哥</a></li>
               </ul>
               <form class="navbar-form navbar-left" action="{{ url_for('search') }}"
@@ -48,7 +62,13 @@
               </form>
               <ul class="nav navbar-nav navbar-right">
                   {% if user %}
-                      <li><a href="{{ url_for('showbasicmessage') }}" target="_blank">{{ user.username }}</a></li>
+                      <li><a href="{{ url_for('showbasicmessage', msgid=user.id) }}" target="_blank">
+                          {% if picid == '0' %}
+                                <img src="{{url_for('static', filename='images/logo.png')}}" alt="...图像加载失败" class="picsize"><br>
+                          {% else %}
+                                <img src="{{url_for('static', filename='images/'+ usermsg.telephone + picid +'.png')}}" alt="...图像加载失败" class="picsize"><br>
+                          {% endif %}
+                      </a></li>
                       <li><a href="{{ url_for('logout') }}">注销</a></li>
                   {% else %}
                       <li><a href="{{ url_for('login') }}">登录</a></li>
@@ -58,8 +78,23 @@
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
     </nav>
+    <script>
+     $(function () {
+        $(".navbar-nav").find("li").each(function () {
+            var a = $(this).find("a:first")[0];
+            if ($(a).attr("href") === location.pathname) {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+        });
+    })
+     </script>
     <div class="main">
         {% block main %}{% endblock %}
+    </div>
+    <div class="click">
+        {% block click %}{% endblock %}
     </div>
     <div class="footer">
         {% block footer %}{% endblock %}

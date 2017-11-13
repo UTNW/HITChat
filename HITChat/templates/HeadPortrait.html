@@ -5,11 +5,12 @@
 
 <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<title>HeadPortrait</title>
+<title>设置头像</title>
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
     <style type="text/css">
     .size {
-        width:180px;
-        height:120px;
+        width:190px;
+        height:180px;
         margin-left:8.5%;
         margin-bottom:10px;
     }
@@ -17,8 +18,8 @@
         margin-left:22%;
     }
     .size2 {
-        width:180px;
-        height:120px;
+        width:190px;
+        height:180px;
         margin-left:22%;
         margin-bottom:10px;
     }
@@ -37,8 +38,11 @@
       <div class="caption">
 
 <div class="list-group">
-
-    <img src="{{ url_for('static', filename='images/'+ usermsg.telephone +'.png')}}" alt="...图像加载失败" class="size2"><br>
+    {% if picid == '0' %}
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="...图像加载失败" class="size2"><br>
+    {% else %}
+        <img src="{{url_for('static', filename='images/userimage/'+ usermsg.telephone + picid +'.png')}}" alt="...图像加载失败" class="size2"><br>
+    {% endif %}
     <label class="size1" style="font-size:16px; font-family:'楷体'">用户名：{{usermsg.username}}</label><br>
     <label class="size1" style="font-size:16px; font-family:'楷体'">座右铭：{{usermsg.motto}}</label><br><br>
 
@@ -54,7 +58,7 @@
 </ul>
     <br><br><br>
 <ul class="nav nav-pills nav-stacked">
-    <a href="{{ url_for('showbasicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>返回个人中心</a>
+    <a href="{{ url_for('showbasicmessage', msgid=usermsg.id) }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>返回个人中心</a>
 </ul>
 
 </div>
@@ -71,7 +75,7 @@
  <div class="list-group">
 
  <ul class="nav nav-pills nav-stacked">
- <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>更改头像</a></li>
+ <li ><label class="list-group-item"><span class="glyphicon glyphicon-send"></span>更改头像</label></li>
  </ul>
 
 <form action="{{url_for('uploadpic')}}" enctype="multipart/form-data" method="POST" >

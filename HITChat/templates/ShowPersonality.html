@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ShowPersonalityMessage</title>
+    <title>个性信息</title>
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <style type="text/css">
     .size {
-        width:180px;
-        height:120px;
+        width:190px;
+        height:180px;
         margin-left:22%;
         margin-bottom:10px;
     }
@@ -30,7 +31,11 @@
       <div class="caption">
 
 <div class="list-group">
-    <img src="{{ url_for('static', filename='images/'+ usermsg.telephone +'.png') }}" alt="...图像加载失败" class="size"><br>
+    {% if picid == '0' %}
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="...图像加载失败" class="size"><br>
+    {% else %}
+        <img src="{{url_for('static', filename='images/userimage/'+ usermsg.telephone + picid +'.png')}}" alt="...图像加载失败" class="size"><br>
+    {% endif %}
     <label class="size1" style="font-size:16px; font-family:'楷体'">用户名：{{usermsg.username}}</label><br>
     <label class="size1" style="font-size:16px; font-family:'楷体'">座右铭：{{usermsg.motto}}</label><br><br>
 
@@ -39,14 +44,17 @@
     <!--<a href="Work.html" class="list-group-item">工作信息</a>-->
     <!--<a href="HeadPortrait.html" class="list-group-item">头像设置</a>-->
 <ul class="nav nav-pills nav-stacked">
-    <a href="{{ url_for('showbasicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>基本资料</a>
-    <a href="{{ url_for('showpersonalitymessage') }}" class="list-group-item active"><span class="glyphicon glyphicon-send"></span>个性资料</a>
-    <a href="{{ url_for('userquestion') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>发表的帖子</a>
+    <a href="{{ url_for('showbasicmessage', msgid=usermsg.id) }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>基本资料</a>
+    <a href="{{ url_for('showpersonalitymessage', msgid=usermsg.id) }}" class="list-group-item active"><span class="glyphicon glyphicon-send"></span>个性资料</a>
+    <a href="{{ url_for('userquestion', msgid=usermsg.id) }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>发表的帖子</a>
+    <a href="{{ url_for('useranswer', msgid=usermsg.id) }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>发表的评论</a>
 </ul>
 <br><br><br>
-<ul class="nav nav-pills nav-stacked">
-    <a href="{{ url_for('basicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑资料</a>
-</ul>
+    {% if currentid == usermsg.id %}
+        <ul class="nav nav-pills nav-stacked">
+            <a href="{{ url_for('basicmessage') }}" class="list-group-item"><span class="glyphicon glyphicon-send"></span>编辑资料</a>
+        </ul>
+    {% endif %}
 
 </div>
 
@@ -64,7 +72,7 @@
  <div class="list-group">
 
  <ul class="nav nav-pills nav-stacked">
- <li ><a class="list-group-item"><span class="glyphicon glyphicon-send"></span>个性资料</a></li>
+ <li ><label class="list-group-item"><span class="glyphicon glyphicon-send"></span>个性资料</label></li>
  </ul>
 
     <br><br>

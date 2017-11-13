@@ -6,6 +6,8 @@ body {
   background: -webkit-linear-gradient(-45deg, #183850 0, #183850 25%, #192c46 50%, #22254c 75%, #22254c 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
+  margin-top: 68px;
+  width: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -230,6 +232,7 @@ body {
   position: relative;
   top:10px;
   left:32%;
+  width: 450px;
 }
 .row .input-group{
   width: 450px;
