@@ -57,7 +57,7 @@
 
 ![](https://github.com/UTNW/HITChat/raw/master/time1.png)
 
-**Created by UTNW(2017.10.01) Update 2017.10.17 2017.11.1**
+**Created by UTNW(2017.10.01) Update 2017.10.17 2017.11.1 2017.11.13**
 
 #### 第一次迭代Burndown Chart
 ![](https://github.com/UTNW/HITChat/raw/master/BurndownChart.png)
@@ -128,7 +128,7 @@
 #### 这是HITChat 2.1 版本，目前实现的功能有：注册、登录、发布问答、查询、评论、个人中心界面，用户对评论和文章进行点赞和评论。
 
 ##### 本周任务：
-*实现用户对评论和文章进行点赞和评论（二次评论）
+* 实现用户对评论和文章进行点赞和评论（二次评论）
 
 **详细页面展示：**
 
