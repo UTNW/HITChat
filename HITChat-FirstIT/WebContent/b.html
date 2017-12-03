@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>webrx-title</title>
+<meta name="description" content="简介">
+<meta name="keywords" content="关键字">
+</head>	
+<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<style>
+.side-nav-item {
+  display: block;
+  padding: 10px 15px 10px 15px;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.item-title {
+  background-color: #F5F5F5;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.panel-heading {
+  margin-top: 5px;
+  padding: 0;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  border-color: #DDDDDD;
+}
+
+.item-body {
+  padding: 10px 15px 5px 15px;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.item-second {
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.item-second a {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.at{ color:red;}
+</style>
+<script>
+
+$(document).ready(function(){	
+var path=window.location.pathname;
+var regExp=/[\/\.\?]+/;
+str=path.split(regExp);
+var node=str.slice(-2,-1);
+$('#'+node+' a').addClass('at');
+$('#'+node).parent().parent().parent().addClass('in');
+})
+</script>
+<body>
+<div class="col-md-2 side-nav">
+  <div class="panel-group" id="accordion">
+    <div class="panel-heading panel">
+      <a href="index.html" class="side-nav-item item-title">
+      	首页
+      </a>
+      <div id='index' class="item-body collapse">
+      </div>
+    </div>
+
+    <div class="panel-heading panel">
+      <a data-toggle="collapse" data-parent="#accordion" href="#item-cangku" id="headcangku" class="side-nav-item item-title">
+      仓库管理
+      </a>
+      <div id="item-cangku" class="panel-collapse collapse">
+        <div class="item-body">
+          <ul class="list-unstyled">
+            <li class="item-second" id='a'><a href="a.html">产品库存</a></li>
+            <li class="item-second" id='b'><a href="b.html">原料库存</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-heading panel">
+      <a data-toggle="collapse" data-parent="#accordion" href="#item-caiwu" id="headcaiwu" class="side-nav-item item-title collapsed">
+      财务管理
+      </a>
+      <div id="item-caiwu" class="panel-collapse collapse">
+        <div class="item-body">
+          222
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel-heading panel">
+      <a data-toggle="collapse" data-parent="#accordion" href="#item-renshi" id="headrenshi" class="side-nav-item item-title collapsed">
+      人事管理
+      </a>
+      <div id="item-renshi" class="panel-collapse collapse">
+        <div class="item-body">
+          index222222222222222222222222222222222
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+b.html
+</body>
+</html>

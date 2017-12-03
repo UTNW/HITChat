@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="bootstrap.min.css">
+<link rel="stylesheet" href="calendar.css">
+<script src="jquery.min.js"></script>
+<script src="calendar.js"></script>
+
+<script>
+
+$(document).ready(function() {
+    if(location.hash) {
+        $('a[href=' + location.hash + ']').tab('show');
+    }
+    $(document.body).on("click", "a[data-toggle]", function(event) {
+        location.hash = this.getAttribute("href");
+    });
+});
+$(window).on('popstate', function() {
+    var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+    $('a[href=' + anchor + ']').tab('show');
+});
+</script>
+
+<script type="text/javascript">
+
+ $(document).ready(function () {
+
+     $('.configHead').load('Test.html');
+
+ });
+
+</script>
+
+</head>
+<body>
+<div id="calendar" class="calendar"></div>
+
+<ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+    <li><a data-toggle="tab" >Profile</a></li>
+    <li><a data-toggle="tab" href="#messages">Messages</a></li>
+    <li><a data-toggle="tab" href="#settings">Settings</a></li>
+</ul>
+
+<div class="tab-content">
+
+    <div class="tab-pane active" id="home">home</div>
+    <div class="tab-pane" id="home">1111111111</div>
+    <div class="tab-pane" id="profile">profile</div>
+    <div class="tab-pane" id="messages">messages</div>
+    <div class="tab-pane" id="settings">settings</div>
+</div>
+
+
+<div class="container">
+<div class="row">
+<div id="calendar" class="calendar"></div>
+<div class="col-md-4">.col-md-4</div>
+<div class="col-md-2 col-md-offset-4">列向右移动四列的间距</div>
+<div class="col-md-2">.col-md-3</div>
+
+
+
+</div>
+<div class="row">
+
+
+
+<div class="col-md-4">.col-md-4</div>
+<div class="col-md-4 col-md-offset-4">列向右移动四列的间距</div>
+</div>
+</div>
+
+
+</body>
+</html>
