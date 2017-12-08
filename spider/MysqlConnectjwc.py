@@ -29,7 +29,8 @@ class mysql:
     def createTables(self):
         self.Cur()
         # 创建数据表
-        self.cur.execute("create table IF NOT EXISTS jwcArticle( id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,title VARCHAR(100) NOT NULL,titleurl VARCHAR(100) NOT NULL,news LONGTEXT NOT NULL)") #教务处文章
+        self.cur.execute("create table IF NOT EXISTS jwcarticle( id INT UNSIGNED PRIMARY KEY,title VARCHAR(100) NOT NULL,titleurl VARCHAR(100) NOT NULL,news LONGTEXT NOT NULL)") #教务处文章
+        self.cur.execute("create table IF NOT EXISTS jwcarticlehtml( id INT UNSIGNED PRIMARY KEY,title VARCHAR(100) NOT NULL,titleurl VARCHAR(100) NOT NULL,news LONGTEXT NOT NULL)") #教务处文章
         '''
         for i in range(15): #右侧文章链接
             self.cur.execute("create table IF NOT EXISTS slideRight" + str(i + 1) + "( id INT UNSIGNED PRIMARY KEY,title VARCHAR(100) NOT NULL,titleurl VARCHAR(100) NOT NULL,source VARCHAR(100) NOT NULL,sourceurl VARCHAR(100) NOT NULL,titleleft VARCHAR(100) NOT NULL)")
@@ -43,8 +44,8 @@ class mysql:
     def insert(self,table,valueduple):
         self.Cur()
         # 插入多条数据
-        sql1 = "insert into "+table+" values(%s,%s,%s)"
-        print valueduple
+        sql1 = "insert into "+table+"(id,title,titleurl,news) values(%s,%s,%s,%s)"
+        #print valueduple
         self.cur.executemany(sql1,valueduple)
         self.cur.close()
         self.conn.commit()
@@ -72,3 +73,4 @@ class mysql:
 if __name__ == '__main__':
     sql = mysql()
     sql.createTables()
+    sql.conn.close()

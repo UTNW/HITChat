@@ -66,3 +66,4 @@ class mysql:
 if __name__ == '__main__':
     sql = mysql()
     sql.createTables()
+    sql.conn.close()

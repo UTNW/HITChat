@@ -1,0 +1,198 @@
+{% extends 'base_news.html' %}
+
+{% block title %}新闻{% endblock %}
+{% block head %}
+	<meta charset="UTF-8">
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
+{#	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/normalize.css') }}"/>#}
+{#    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/htmleaf-demo.css') }}">#}
+{#    <link href="{{ url_for('static',filename='css/main.min.css') }}" rel="stylesheet" type="text/css">#}
+    <link href="{{ url_for('static',filename='css/ma5slider.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+{#    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">#}
+{##}
+{#    <!-- 可选的Bootstrap主题文件（一般不用引入） -->#}
+{#    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">#}
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+{#    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>#}
+{##}
+{#    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">#}
+{#    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>#}
+{##}
+
+    <link href="{{ url_for('static',filename='css/effects.css') }}" rel="stylesheet">
+
+
+{#    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/normalize.css') }}" />#}
+{#    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/demo.css') }}" />#}
+    <!--必要样式-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/component.css') }}" />
+
+{#    <style type="text/css">#}
+{#        body{padding-top: 0;}#}
+{#        #sample-1{margin-top: 50px;}#}
+{#    </style>#}
+{% endblock %}
+{% block main %}
+	<div class="htmleaf-container" style="z-index: -1">
+    <div class="container">
+    <div id="example-32" class="ma5slider outside-navs outside-dots loop-mode">
+        <div class="slides">
+            <a href="#slide-1"><img src="{{ url_for('static',filename='images/one.jpg') }}" alt="图片加载中..."></a>
+            <a href="#slide-2" data-ma5-anim="anim-vertical"><img src="{{ url_for('static',filename='images/two.jpg') }}" alt="图片加载中..."></a>
+            <a href="#slide-3" data-ma5-anim="anim-fade"><img src="{{ url_for('static',filename='images/three.jpg') }}" alt="图片加载中..."></a>
+        </div>
+    </div>
+</div>
+</div>
+	<script src="http://cdn.bootcss.com/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
+	<script>window.jQuery || document.write('<script src="{{ url_for('static',filename='JS/jquery-1.11.0.min.js') }}"><\/script>')</script>
+	<script src="{{ url_for('static',filename='JS/jquery-ui.min.js') }}"></script>
+       <script src="{{ url_for('static',filename='JS/jquery.ui.touch-punch.min.js') }}"></script>
+       <script src="{{ url_for('static',filename='JS/functions.js') }}"></script>
+	<script src="{{ url_for('static',filename='JS/ma5slider.min.js') }}"></script>
+	<script>
+        $(window).on('load', function () {
+            $('.ma5slider').ma5slider();
+            // Methods
+            $('#example-34').ma5slider('goToSlide', 3);
+            // Calls
+            $('#example-34').on('ma5.animationStart', function () {
+                console.log('event animationStart');
+            });
+            $('#example-34').on('ma5.animationEnd', function () {
+                console.log('event animationEnd');
+            });
+            $('#example-34').on('ma5.firstSlide', function () {
+                console.log('event firstSlide');
+            });
+            $('#example-34').on('ma5.lastSlide', function () {
+                console.log('event lastSlide');
+            });
+            $('#example-34').on('ma5.activeSlide', function (event, slide) {
+                console.log( 'event activeSlide: ' + slide );
+            });
+        });
+    </script>
+<div class = "container">
+<div class="line">
+ <div class="col-sm-7 col-md-4" >
+
+      <div class="hover ehover2">
+         <img class="img-responsive" src="{{ url_for('static',filename='images/p11.jpg') }}" alt="图片加载中..." style = "width: 100%">
+         <div class="overlay">
+             <a href="http://today.hit.edu.cn" target="_blank"> <h2>今日哈工大</h2></a>
+             <button class="info" data-toggle="modal" data-target="#modal2"><a href="http://today.hit.edu.cn/classList/1.html" target="_blank">最新消息</a>
+             </button>
+         </div>
+     </div>
+
+      <div class="thumbnail">
+    <div class="caption">
+ <div class="list-group">
+ <div style=" overflow-y:auto; overflow-x:auto; width:100%; height:580px;">
+
+       <section class="color-8">
+		<nav1 class="cl-effect-7">
+            {% for title in dataSql %}
+			    <a href="{{ url_for('newsdetail',news_leftid=title[5],news_id=title[0]) }} "><span>[{{ title[3].decode('utf-8') }}]</span>&nbsp;{{ title[1].decode('utf-8') }}</a>
+            {% endfor %}
+			<a href="#">更多</a>
+		</nav1>
+	</section>
+
+ </div>
+ </div>
+ </div>
+
+</div>
+</div></div>
+
+<div class="line">
+ <div class="col-sm-7 col-md-4 " >
+      <div class="hover ehover13">
+        <img class="img-responsive" src="{{ url_for('static',filename='images/p4.jpg') }}" alt="图片加载中...">
+        <div class="overlay">
+            <a href="http://jwc.hit.edu.cn/" target="_blank"><h2>教务处</h2></a>
+            <button class="info nullbutton" data-toggle="modal" data-target="#modal13"><a href="http://jwc.hit.edu.cn/2591/list.htm" target="_blank">最新消息</a>
+            </button>
+        </div>
+    </div>
+
+    <div class="thumbnail">
+    <div class="caption">
+       <div class="list-group">
+ <div style=" overflow-y:auto; overflow-x:auto; width:100%; height:580px;">
+
+    <section class="color-9">
+<nav1 class="cl-effect-7">
+            
+   {% for title in datajwc %}
+       <a href="{{ url_for('jwcdetail',news_id=title[0]) }} "><span data-hover="点击查看详情" style="text-align:center">[{{ title[1].decode('utf-8') }}]</span></a>
+   {% endfor %}
+<a href="#">更多</a>
+</nav1>
+	</section>
+
+ </div>
+ </div>
+ </div>
+
+</div>
+</div></div>
+
+<div class="line">
+ <div class="col-sm-7 col-md-4 " >
+       <div class="hover ehover14">
+         <img class="img-responsive" src="{{ url_for('static',filename='images/cac.jpg') }}" alt="图片加载中...">
+         <div class="overlay">
+             <a href="http://www.qq.com/" target="_blank"><h2>实时新闻</h2></a>
+             <button class="info nullbutton" data-toggle="modal" data-target="#modal14"><a href="http://news.qq.com/" target="_blank">最新消息</a></button>
+         </div>
+     </div>
+
+       <div class="thumbnail">
+    <div class="caption">
+       <div class="list-group">
+ <div style=" overflow-y:auto; overflow-x:auto; width:100%; height:580px;">
+
+      <section class="color-5">
+		<nav1 class="cl-effect-7">
+			{% for title in datatencent %}
+               <a href="{{ title[2] }} " target="_blank"><span>[{{ title[1].decode('utf-8') }}]</span></a>
+           {% endfor %}
+		</nav1>
+	</section>
+
+ </div>
+ </div>
+ </div>
+
+</div>
+</div></div>
+</div>
+
+{% endblock %}
+{% block bottom %}
+	<!-- 最底下的声明 -->
+	<br>
+	<br>
+	<footer class="mod-footer text-center">
+		<div class="footer-box">
+			<div class="inner-box">
+				<a href="#" target="_blank">联系我们</a>
+					<span>&nbsp;|&nbsp;</span>
+				<a href="#" target="_blank">给我写信</a>
+					<span>&nbsp;|&nbsp;</span>
+				<a href="#" target="_blank">意见反馈</a>
+			</div>
+			<label style="font-family:'宋体'; color:gray ;font-size:13px">©2017 Software Engineering, School of Computer Science and Technology, Harbin Institute of Technology | Designed by UTNW</label>
+		</div>
+	</footer>
+
+{% endblock %}
+{% block other %}
+<a id="scrollTop" href="javacript:void(0);" title="返回顶部" style="display: inline;"></a>
+{% endblock %}

@@ -14,6 +14,7 @@ import random
 from bs4 import BeautifulSoup
 from MysqlConnecttencent import mysql
 sql = mysql()
+sql.delete('tencentnews')
 header = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
 }
@@ -46,4 +47,4 @@ for n in news_titles:
     t1 = random.randint(1,3)
     print "休息%s秒"%t1
     time.sleep(t1)
-
+sql.conn.close()

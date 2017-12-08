@@ -1,0 +1,306 @@
+{% extends 'base.html' %}
+
+{% block title %}注册{% endblock %}
+
+{% block head%}
+    <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/login_register.css') }}">
+    <!-- 用于适应不同设备 -->
+    {#<meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+    <!-- bootstrap 样式表 -->
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript"
+        src="{{ url_for('static',filename='JS/jquery.js') }}"></script>
+    <script type="text/javascript">
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+    <script type="text/javascript">
+        var flag = {
+            "email":false,
+            "username":true,
+            "telephone":false,
+            "password1":false,
+            "password2":false,
+        };
+        $(function(){
+{#            // email验证#}
+{#            $("#txtEmail").blur(function(){#}
+{#                var email = $(this).val();#}
+{#                var pattern=/\b(^['_A-Za-z0-9-]+(\.['_A-Za-z0-9-]+)*@([A-Za-z0-9-])+(\.[A-Za-z0-9-]+)*((\.[A-Za-z0-9]{2,})|(\.[A-Za-z0-9]{2,}\.[A-Za-z0-9]{2,}))$)\b/;#}
+{#                if(!pattern.test(email)){#}
+{#                    $("#email\\.info").html("Email格式不正确");#}
+{#                        return;#}
+{#                }#}
+{#                else{#}
+{#                    $("#email\\.info").html("");#}
+{#                        flag.email = true;#}
+{#                }#}
+{#                // 邮箱重复校验#}
+{#            });#}
+
+{#            $("#txtUsername").blur(function(){#}
+{#                // 用户名校验#}
+{#                var username = $(this).val();#}
+{#                // 校验规则，可调整#}
+{#                var pattern =  /^[\u4e00-\u9fff\w]{1,16}$/;#}
+{#                if(!pattern.test(username)){#}
+{#                    $("#username\\.info").html("用户名不合法");#}
+{#                    flag.username = false;#}
+{#                    return;#}
+{#                }#}
+{#                else{#}
+{#                    $("#username\\.info").html("");#}
+{#                    flag.username = true;#}
+{#                }#}
+{#            });#}
+
+            $("#txtTelephone").blur(function(){
+                // 电话号码校验
+                var telephone = $(this).val();
+                // 校验规则，可调整
+                var pattern = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,1-9]))\d{8}$/;
+                if(!pattern.test(telephone)){
+                    $("#telephone\\.info").html("&nbsp;<span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span>电话号码不存在");
+                    flag.telephone = false;
+                    return;
+                }
+                else{
+                    $("#telephone\\.info").html("");
+                    flag.telephone = true;
+                    return;
+                }
+            });
+
+            // 密码校验
+            $("#txtPassword1").blur(function(){
+                var password1=$(this).val();
+                var pattern = /\b(^['A-Za-z0-9]{4,20}$)\b/;
+                if(flag.password2 == true){
+                    if (password1!=$("#txtPassword2").val()) {
+                    $("#password1\\.info").html("&nbsp;<span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span>两次密码输入不一致");
+                        flag.password1 = false;
+                        return;
+                    }
+                    else{
+                        $("#password1\\.info").html("");
+                        flag.password1 = true;
+                        return;
+                    }
+                }
+                else if (flag.password2 == false&&$("#txtPassword2").val()){
+                    if (password1!=$("#txtPassword2").val()) {
+                    $("#password2\\.info").html("&nbsp;<span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span>两次密码输入不一致");
+                        flag.password2 = false;
+                        return;
+                    }
+                    else{
+                        $("#password2\\.info").html("");
+                        flag.password2 = true;
+                        return;
+                    }
+                }
+                else if (!pattern.test(password1)) {
+                    $("#password1\\.info").html("&nbsp;<span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span>密码格式不正确(至少输入6位)");
+                    flag.password1=false;
+                    return;
+                }else{
+                    $("#password1\\.info").html("");
+                    flag.password1=true;
+                    return;
+                }
+            });
+
+            // 密码重复校验
+            $("#txtPassword2").blur(function(){
+                var password1 = $("#txtPassword1").val();
+                var password2 = $(this).val();
+                var pattern = /\b(^['A-Za-z0-9]{4,20}$)\b/;
+                if(flag.password1 == false){
+                    if (password1!=$("#txtPassword2").val()) {
+                        $("#password1\\.info").html("&nbsp;<span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span>两次密码输入不一致");
+                        flag.password1 = false;
+                        return;
+                    }
+                    else{
+                        $("#password1\\.info").html("");
+                        flag.password1 = true;
+                        return;
+                    }
+                }
+                else if (password2!=$("#txtPassword1").val()) {
+                    $("#password2\\.info").html("&nbsp;<span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span>两次密码输入不一致");
+                    flag.password2 = false;
+                    return;
+                }
+                else{
+                    $("#password2\\.info").html("");
+                    flag.password2 = true;
+                    return;
+                }
+            });
+
+            $("#form").submit(function(){
+                var ok = flag.username&&flag.password1&&flag.telephone&&flag.password2;
+                if(ok==false){
+                    alert("您的注册信息存在问题，请查验！");
+                    //history.back();
+                    return false;
+                }
+                return true;
+            });
+
+        })
+    </script>
+	<script type="text/javascript">
+        $(function(){
+            //得到焦点
+            $("#txtPassword1").focus(function(){
+                $("#left_hand").animate({
+                    left: "150",
+                    top: " -38"
+                },{step: function(){
+                    if(parseInt($("#left_hand").css("left"))>140){
+                        $("#left_hand").attr("class","left_hand");
+                    }
+                }}, 2000);
+                $("#right_hand").animate({
+                    right: "-64",
+                    top: "-38px"
+                },{step: function(){
+                    if(parseInt($("#right_hand").css("right"))> -70){
+                        $("#right_hand").attr("class","right_hand");
+                    }
+                }}, 2000);
+            });
+            //失去焦点
+            $("#txtPassword1").blur(function(){
+                $("#left_hand").attr("class","initial_left_hand");
+                $("#left_hand").attr("style","left:100px;top:-12px;");
+                $("#right_hand").attr("class","initial_right_hand");
+                $("#right_hand").attr("style","right:-112px;top:-12px");
+            });
+        });
+               $(function(){
+            //得到焦点
+            $("#txtPassword2").focus(function(){
+                $("#left_hand").animate({
+                    left: "150",
+                    top: " -38"
+                },{step: function(){
+                    if(parseInt($("#left_hand").css("left"))>140){
+                        $("#left_hand").attr("class","left_hand");
+                    }
+                }}, 2000);
+                $("#right_hand").animate({
+                    right: "-64",
+                    top: "-38px"
+                },{step: function(){
+                    if(parseInt($("#right_hand").css("right"))> -70){
+                        $("#right_hand").attr("class","right_hand");
+                    }
+                }}, 2000);
+            });
+            //失去焦点
+            $("#txtPassword2").blur(function(){
+                $("#left_hand").attr("class","initial_left_hand");
+                $("#left_hand").attr("style","left:100px;top:-12px;");
+                $("#right_hand").attr("class","initial_right_hand");
+                $("#right_hand").attr("style","right:-112px;top:-12px");
+            });
+        });
+    </script>
+{% endblock %}
+{% block tou1 %}
+    <div style="width: 165px;height: 60px;position: absolute;margin-top:80px;margin-left: 55px">
+            <div class="tou"></div>
+            <div id="left_hand" class="initial_left_hand"></div>
+            <div id="right_hand" class="initial_right_hand"></div>
+    </div>
+{% endblock %}
+{% block main %}
+    <h3 class="page-title">注册</h3>
+    <form action="" method="POST" id="form">
+        <div class="form-container">
+            <div class="form-group">
+                <input type="text" class="form-control" id="txtTelephone" placeholder="手机号码" name="telephone" required>
+                 <span id="telephone.info" style="color:red;font-family:'宋体'"></span>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="txtUsername" placeholder="用户名" name="username" required>
+                <span id="username.info" style="color:red;font-family:'宋体'"></span>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="txtPassword1" placeholder="密码" name="password1" required>
+                <span id="password1.info" style="color:red;font-family:'宋体'"></span>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="txtPassword2" placeholder="确认密码" name="password2" required>
+                <span id="password2.info" style="color:red;font-family:'宋体'"></span>
+            </div>
+			<div class="form-group">
+                <input type="text" class="form-control" id="yzm" placeholder="验证码" name="yzm" style="width:142px;float:left" required>&nbsp;&nbsp;
+                <input type="submit" id="btn" class="btn btn-primary btn-block" value="免费获取验证码" style="width:150px;float:left" onclick="settime(this)"/>
+            </div>
+            <br>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">立即注册</button>
+            </div>
+            <div class="form-group">
+                 &nbsp;&nbsp;&nbsp;&nbsp;
+                 {% if flag == 1%}
+                     <font style="color:red;font-family:'宋体'">手机号码已被注册</font>
+                 {% else %}
+				     <font style="color:red;font-family:'宋体'">验证码错误</font>
+				 {% endif %}
+            </div>
+			<a href="{{ url_for('contactAdmin') }}">登录遇到问题？联系管理员</a>
+        </div>
+    </form>
+    <script type="text/javascript">
+        var countdown=60;
+        function settime(obj) {
+            if (countdown == 0) {
+                obj.removeAttribute("disabled");
+                obj.value = "免费获取验证码";
+                countdown = 60;
+                return;
+            } else {
+                obj.setAttribute("disabled", true);
+                obj.value = "重新发送(" + countdown + ")";
+                countdown--;
+            }
+            setTimeout(function () {
+                    settime(obj)
+                }
+                , 1000)
+        }
+   </script>
+   <script type=text/javascript>
+      $(function() {
+        $('input#btn').bind('click', function() {
+          $.getJSON($SCRIPT_ROOT + '/sendyzm', {
+              telephone: $('input[name="telephone"]').val(),
+              yzm: $('input[name="yzm"]').val()
+        }, function() {
+           $("#yzm").text('');
+//            '#frame'.location.reload(true);
+          });
+          return false;
+        });
+      });
+   </script>
+{% endblock %}
+{% block footer%}
+    <div class="footer">
+        <br/>
+        <span>@2017 Software Engineering, School of Computer Science and Technology, Harbin Institute of Technology | Designed by UTNW</span>
+    </div>
+{% endblock %}

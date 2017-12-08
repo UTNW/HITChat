@@ -1,0 +1,44 @@
+extends layout
+block content
+	div.loginbox#loginbox
+		div.title
+			img(src="/static/images/login.png", alt="")
+			h2 欢迎加入HITChat大家庭
+		div.loginwarp
+			input#username.formcontrol(type="text",placeholder="请输入用户名")
+			input#userlogin.btn(type="button",value="加入HITChat")
+	div.chatbox#chatbox
+		div.left
+			div.title
+				h2 #{title}
+				span 
+					span#myuser
+					span  | 
+					a(href="/") 退出
+			div.showmsg#showmsg
+				div.warp#showbox
+			div.sendmsg
+				div.toolbar#tool_bar
+					div.exprebox#exprebox
+						-for(var i=134;i<=182;i++)
+							if (i <= 133)
+								img(src="/static/images/emoji/#{i}.gif",)
+							else
+								img(src="/static/images/emoji/#{i}.png",)
+					i.icobtn.icon-expre#expre
+					i.icobtn.icon-shake#shake(title='发送抖窗')
+					//- i.icobtn.icon-img#img(title="上传图片")
+
+				textarea#msgbox(placeholder="请输入聊天内容")
+				div.action
+					span 按 CTRL+ENTER 发送
+					input.btn.send_btn#send(type="button",value="发送")
+
+
+		div.right
+			div.title
+				h2 在线成员（<span id="num">150</span>）
+			ul#userlist
+
+
+		
