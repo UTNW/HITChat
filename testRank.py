@@ -74,12 +74,21 @@ class mysql:
 
 class articleKey:
     def generator(self,text):
-        tr4w = TextRank4Keyword(stop_words_file='./stopword.txt')  # 导入停止词
+        tr4w = TextRank4Keyword(stop_words_file='/home/ubuntu/HITChat/stopword.txt')  # 导入停止词
         #使用词性过滤，文本小，窗口为3
         tr4w.train(text=text, speech_tag_filter=False, lower=True, window=3)
         key = []
+        origin = []
+        with open("/home/ubuntu/HITChat/userarticle.txt","r") as f:
+            for line in f.readlines():
+                origin.append(line.strip())
         for word in tr4w.get_keywords(10, word_min_len=2):
             key.append(word)
+        if len(origin) <= 200:
+            with open("/home/ubuntu/HITChat/userarticle.txt","a") as f:
+                for i in range(len(key)):
+                    if key[i] not in origin:
+                        f.write(key[i]+"\n")
         return key
         
 if __name__ == '__main__':
